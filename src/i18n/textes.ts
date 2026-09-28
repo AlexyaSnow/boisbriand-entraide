@@ -36,6 +36,11 @@ export const textes = {
     ferme: "Fermé",
     jusqua: "jusqu’à",
     ouvreA: "ouvre à",
+    connexion: "Connexion",
+    deconnexion: "Sortir",
+    connexionTitre: "Connexion",
+    connexionLede: "Un compte Google pour publier. Ce n’est pas un réseau social.",
+    connexionGoogle: "Continuer avec Google",
   },
   en: {
     marque: "Boisbriand Mutual Aid",
@@ -72,6 +77,11 @@ export const textes = {
     ferme: "Closed",
     jusqua: "until",
     ouvreA: "opens at",
+    connexion: "Sign in",
+    deconnexion: "Sign out",
+    connexionTitre: "Sign in",
+    connexionLede: "A Google account is enough to publish. This is not a social network.",
+    connexionGoogle: "Continue with Google",
   },
 } as const;
 
