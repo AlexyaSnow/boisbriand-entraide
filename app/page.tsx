@@ -4,10 +4,10 @@ import { POINTS_AUTORISES } from "@/src/domain/points";
 export default function Accueil() {
   return (
     <main>
-      <h1>Donner au suivant, sans le fil Facebook.</h1>
+      <h1>Entraide à Boisbriand</h1>
       <p className="lede">
-        Un item. Un échange. Un jeton. On se rejoint seulement dans un lieu
-        public de la liste.
+        Publier un don ou un besoin. Se rejoindre dans un lieu public de la
+        liste. Un item, un échange.
       </p>
       <div className="actions">
         <Link className="btn btn-primary" href="/offre">

@@ -11,7 +11,8 @@ const serif = Fraunces({
 
 export const metadata: Metadata = {
   title: "Entraide Boisbriand",
-  description: "Donner et recevoir sans le chaos des groupes Facebook.",
+  description:
+    "Publier un don ou un besoin et se rejoindre dans un lieu public à Boisbriand.",
 };
 
 export default function RootLayout({
