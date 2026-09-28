@@ -1,5 +1,6 @@
 "use server";
 
+import { auth } from "@/auth";
 import { prisma } from "@/src/lib/prisma";
 
 const categories = ["vetement", "denree", "enfant", "autre"] as const;
@@ -8,6 +9,11 @@ export async function publierAnnonce(
   type: "offre" | "besoin",
   formData: FormData,
 ): Promise<{ ok: true } | { ok: false; message: string }> {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return { ok: false, message: "Connecte-toi avec Google pour publier." };
+  }
+
   const titre = String(formData.get("titre") ?? "").trim();
   const categorie = String(formData.get("categorie") ?? "");
   const detail = String(formData.get("detail") ?? "").trim();
@@ -26,6 +32,7 @@ export async function publierAnnonce(
         titre,
         categorie: categorie as (typeof categories)[number],
         detail,
+        auteurId: session.user.id,
       },
     });
     return { ok: true };
