@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { POINTS_AUTORISES } from "@/src/domain/points";
+import { ListePoints } from "@/src/ui/ListePoints";
 
 export default function Accueil() {
   return (
@@ -18,14 +19,7 @@ export default function Accueil() {
         </Link>
       </div>
       <h2>Points de rencontre</h2>
-      <ul className="liste">
-        {POINTS_AUTORISES.map((point) => (
-          <li key={point.id}>
-            <span className="nom">{point.nom}</span>
-            <span className="meta">{point.adresseAffichee}</span>
-          </li>
-        ))}
-      </ul>
+      <ListePoints points={POINTS_AUTORISES} />
     </main>
   );
 }
