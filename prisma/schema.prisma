@@ -80,6 +80,7 @@ model Annonce {
   titre     String
   categorie Categorie
   detail    String        @default("")
+  photoUrl  String?
   statut    StatutAnnonce @default(ouverte)
   auteurId  String?
   auteur    User?         @relation(fields: [auteurId], references: [id])
