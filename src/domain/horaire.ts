@@ -8,7 +8,7 @@ export function etatOuverture(
   horaires: Intervalle[][],
   maintenant = new Date(),
   fuseau = "America/Toronto",
-): { ouvert: boolean; libelle: string } {
+): { ouvert: boolean; heure?: string } {
   const parts = new Intl.DateTimeFormat("fr-CA", {
     timeZone: fuseau,
     weekday: "short",
@@ -38,14 +38,14 @@ export function etatOuverture(
 
   if (ouvert) {
     const courant = creneaux.find((c) => min >= c.debutMin && min < c.finMin)!;
-    return { ouvert: true, libelle: `Ouvert · jusqu'’à ${fmt(courant.finMin)}` };
+    return { ouvert: true, heure: fmt(courant.finMin) };
   }
 
   const prochain = creneaux.find((c) => min < c.debutMin);
   if (prochain) {
-    return { ouvert: false, libelle: `Fermé · ouvre à ${fmt(prochain.debutMin)}` };
+    return { ouvert: false, heure: fmt(prochain.debutMin) };
   }
-  return { ouvert: false, libelle: "Fermé" };
+  return { ouvert: false };
 }
 
 function fmt(min: number): string {

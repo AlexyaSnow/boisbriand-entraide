@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { DM_Sans, Fraunces } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
+import { langueActuelle } from "@/src/i18n/langue";
+import { t } from "@/src/i18n/textes";
+import { BasculeLangue } from "@/src/ui/BasculeLangue";
 
 const sans = DM_Sans({ subsets: ["latin"], variable: "--font-sans" });
 const serif = Fraunces({
@@ -15,22 +18,25 @@ export const metadata: Metadata = {
     "Publier un don ou un besoin et se rejoindre dans un lieu public à Boisbriand.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const langue = await langueActuelle();
+  const i = t(langue);
   return (
-    <html lang="fr">
+    <html lang={langue}>
       <body className={`${sans.variable} ${serif.variable}`}>
         <div className="shell">
           <header className="top">
             <Link className="marque" href="/">
-              Entraide Boisbriand
+              {i.marque}
             </Link>
             <nav className="nav">
-              <Link href="/offre">Offrir</Link>
-              <Link href="/besoin">Besoin</Link>
+              <Link href="/offre">{i.offrir}</Link>
+              <Link href="/besoin">{i.besoin}</Link>
+              <BasculeLangue actuelle={langue} />
             </nav>
           </header>
           {children}

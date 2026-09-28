@@ -2,10 +2,14 @@ import Link from "next/link";
 import { POINTS_AUTORISES } from "@/src/domain/points";
 import { ListePoints } from "@/src/ui/ListePoints";
 import { prisma } from "@/src/lib/prisma";
+import { langueActuelle } from "@/src/i18n/langue";
+import { t } from "@/src/i18n/textes";
 
 export const dynamic = "force-dynamic";
 
 export default async function Accueil() {
+  const langue = await langueActuelle();
+  const i = t(langue);
   let annonces: { id: string; type: string; titre: string; categorie: string }[] =
     [];
   try {
@@ -20,36 +24,33 @@ export default async function Accueil() {
 
   return (
     <main>
-      <h1>Entraide à Boisbriand</h1>
-      <p className="lede">
-        Publier un don ou un besoin. Se rejoindre dans un lieu public de la
-        liste. Un item, un échange.
-      </p>
+      <h1>{i.titre}</h1>
+      <p className="lede">{i.lede}</p>
       <div className="actions">
         <Link className="btn btn-primary" href="/offre">
-          Publier une offre
+          {i.btnOffre}
         </Link>
         <Link className="btn btn-ghost" href="/besoin">
-          Publier un besoin
+          {i.btnBesoin}
         </Link>
       </div>
-      <h2>Annonces ouvertes</h2>
+      <h2>{i.annonces}</h2>
       {annonces.length === 0 ? (
-        <p className="hint">Aucune annonce pour l’instant.</p>
+        <p className="hint">{i.aucune}</p>
       ) : (
         <ul className="liste">
           {annonces.map((a) => (
             <li key={a.id}>
               <span className="nom">{a.titre}</span>
               <span className="meta">
-                {a.type === "offre" ? "Offre" : "Besoin"} · {a.categorie}
+                {a.type === "offre" ? i.offre : i.besoinLabel} · {a.categorie}
               </span>
             </li>
           ))}
         </ul>
       )}
-      <h2 style={{ marginTop: "2rem" }}>Points de rencontre</h2>
-      <ListePoints points={POINTS_AUTORISES} />
+      <h2 style={{ marginTop: "2rem" }}>{i.points}</h2>
+      <ListePoints points={POINTS_AUTORISES} langue={langue} />
     </main>
   );
 }

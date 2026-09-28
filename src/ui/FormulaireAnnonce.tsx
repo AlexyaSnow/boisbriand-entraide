@@ -2,10 +2,12 @@
 
 import { FormEvent, useState } from "react";
 import { publierAnnonce } from "@/src/actions/annonce";
+import { t, type Langue } from "@/src/i18n/textes";
 
-type Props = { type: "offre" | "besoin" };
+type Props = { type: "offre" | "besoin"; langue: Langue };
 
-export function FormulaireAnnonce({ type }: Props) {
+export function FormulaireAnnonce({ type, langue }: Props) {
+  const i = t(langue);
   const [ok, setOk] = useState(false);
   const [erreur, setErreur] = useState("");
   const [attente, setAttente] = useState(false);
@@ -25,46 +27,33 @@ export function FormulaireAnnonce({ type }: Props) {
   }
 
   if (ok) {
-    return (
-      <p className="ok">
-        {type === "offre" ? "Offre" : "Besoin"} enregistré. Il apparaîtra à
-        l’accueil.
-      </p>
-    );
+    return <p className="ok">{type === "offre" ? i.okOffre : i.okBesoin}</p>;
   }
 
   return (
     <form onSubmit={envoyer}>
       <label>
-        Titre
-        <span className="hint">Une ligne. Un item.</span>
-        <input
-          name="titre"
-          required
-          maxLength={80}
-          placeholder="Manteau d’hiver, enfant 6 ans"
-        />
+        {i.champTitre}
+        <span className="hint">{i.hintTitre}</span>
+        <input name="titre" required maxLength={80} />
       </label>
       <label>
-        Catégorie
+        {i.categorie}
         <select name="categorie" required defaultValue="vetement">
-          <option value="vetement">Vêtement</option>
-          <option value="denree">Denrée non périssable</option>
-          <option value="enfant">Article pour enfant</option>
-          <option value="autre">Autre ressource</option>
+          <option value="vetement">{i.vetement}</option>
+          <option value="denree">{i.denree}</option>
+          <option value="enfant">{i.enfant}</option>
+          <option value="autre">{i.autre}</option>
         </select>
       </label>
       <label>
-        Détail (optionnel)
+        {i.detail}
         <textarea name="detail" maxLength={400} />
       </label>
-      <p className="hint">
-        Le lieu de rencontre se choisit plus tard, dans la liste fermée. Pas
-        d’adresse personnelle.
-      </p>
+      <p className="hint">{i.hintLieu}</p>
       {erreur ? <p className="etat ferme">{erreur}</p> : null}
       <button className="btn btn-primary" type="submit" disabled={attente}>
-        {attente ? "Enregistrement…" : "Publier"}
+        {attente ? i.attente : i.publier}
       </button>
     </form>
   );
