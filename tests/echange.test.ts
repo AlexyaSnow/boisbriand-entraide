@@ -14,6 +14,17 @@ describe("échange",
         expect(chatAutorise(echange)).toBe(true);
       });
 
+    it("refuse un échange avec soi-même",
+      () => {
+        expect(() =>
+          creerEchange({
+            annonceId: "manteau-6ans",
+            offrantId: "a",
+            demandeurId: "a",
+          }),
+        ).toThrow("Un échange implique deux comptes distincts");
+      });
+
     it("coupe le chat à la remise",
       () => {
         const ouvert = creerEchange({
@@ -23,5 +34,16 @@ describe("échange",
         });
         const remis = cloturer(ouvert, "remis");
         expect(chatAutorise(remis)).toBe(false);
+      });
+
+    it("coupe le chat à l’annulation",
+      () => {
+        const ouvert = creerEchange({
+          annonceId: "boite-conserve",
+          offrantId: "a",
+          demandeurId: "b",
+        });
+        const annule = cloturer(ouvert, "annule");
+        expect(chatAutorise(annule)).toBe(false);
       });
   });
