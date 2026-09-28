@@ -34,6 +34,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   annonces      Annonce[]
+  reponses      Reponse[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
@@ -84,5 +85,17 @@ model Annonce {
   statut    StatutAnnonce @default(ouverte)
   auteurId  String?
   auteur    User?         @relation(fields: [auteurId], references: [id])
+  reponses  Reponse[]
   createdAt DateTime      @default(now())
+}
+
+model Reponse {
+  id        String   @id @default(cuid())
+  annonceId String
+  auteurId  String
+  annonce   Annonce  @relation(fields: [annonceId], references: [id], onDelete: Cascade)
+  auteur    User     @relation(fields: [auteurId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([annonceId, auteurId])
 }
