@@ -1,7 +1,11 @@
 "use server";
 
+import { randomUUID } from "crypto";
+import { mkdir, writeFile } from "fs/promises";
+import path from "path";
 import { auth } from "@/auth";
 import { validerAnnonce } from "@/src/domain/annonce";
+import { extensionPhoto, validerPhoto } from "@/src/domain/photo";
 import { prisma } from "@/src/lib/prisma";
 
 export async function publierAnnonce(
@@ -19,6 +23,20 @@ export async function publierAnnonce(
   });
   if (!valide.ok) return valide;
 
+  const brut = formData.get("photo");
+  const fichier = brut instanceof File && brut.size > 0 ? brut : null;
+  const photoOk = validerPhoto(fichier);
+  if (!photoOk.ok) return photoOk;
+
+  let photoUrl: string | null = null;
+  if (fichier) {
+    const nom = `${randomUUID()}.${extensionPhoto(fichier.type)}`;
+    const dossier = path.join(process.cwd(), "public", "annonces");
+    await mkdir(dossier, { recursive: true });
+    await writeFile(path.join(dossier, nom), Buffer.from(await fichier.arrayBuffer()));
+    photoUrl = `/annonces/${nom}`;
+  }
+
   try {
     await prisma.annonce.create({
       data: {
@@ -26,6 +44,7 @@ export async function publierAnnonce(
         titre: valide.titre,
         categorie: valide.categorie,
         detail: String(formData.get("detail") ?? "").trim(),
+        photoUrl,
         auteurId: session.user.id,
       },
     });

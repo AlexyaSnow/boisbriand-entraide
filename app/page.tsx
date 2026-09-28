@@ -10,8 +10,13 @@ export const dynamic = "force-dynamic";
 export default async function Accueil() {
   const langue = await langueActuelle();
   const i = t(langue);
-  let annonces: { id: string; type: string; titre: string; categorie: string }[] =
-    [];
+  let annonces: {
+    id: string;
+    type: string;
+    titre: string;
+    categorie: string;
+    photoUrl: string | null;
+  }[] = [];
   try {
     annonces = await prisma.annonce.findMany({
       where: { statut: "ouverte" },
@@ -40,11 +45,17 @@ export default async function Accueil() {
       ) : (
         <ul className="liste">
           {annonces.map((a) => (
-            <li key={a.id}>
-              <span className="nom">{a.titre}</span>
-              <span className="meta">
-                {a.type === "offre" ? i.offre : i.besoinLabel} · {a.categorie}
-              </span>
+            <li key={a.id} className="annonce">
+              {a.photoUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img className="vignette" src={a.photoUrl} alt="" />
+              ) : null}
+              <div>
+                <span className="nom">{a.titre}</span>
+                <span className="meta">
+                  {a.type === "offre" ? i.offre : i.besoinLabel} · {a.categorie}
+                </span>
+              </div>
             </li>
           ))}
         </ul>

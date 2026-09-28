@@ -47,6 +47,11 @@ export function FormulaireAnnonce({ type, langue }: Props) {
         </select>
       </label>
       <label>
+        {i.photo}
+        <span className="hint">{i.hintPhoto}</span>
+        <input name="photo" type="file" accept="image/jpeg,image/png,image/webp" />
+      </label>
+      <label>
         {i.detail}
         <textarea name="detail" maxLength={400} />
       </label>
