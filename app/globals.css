@@ -1,0 +1,40 @@
+:root {
+  color: #111;
+  background: #f6f1e8;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+body {
+  margin: 0 auto;
+  max-width: 40rem;
+  padding: 2rem 1.25rem 4rem;
+  line-height: 1.45;
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 0.25rem;
+}
+
+.lede {
+  color: #444;
+  margin-bottom: 2rem;
+}
+
+ul {
+  padding-left: 1.2rem;
+}
+
+li {
+  margin-bottom: 0.6rem;
+}
+
+.nom {
+  font-weight: 700;
+}
+
+.meta {
+  display: block;
+  color: #555;
+  font-size: 0.95rem;
+}
