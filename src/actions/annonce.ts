@@ -1,12 +1,10 @@
 "use server";
 
-import { randomUUID } from "crypto";
-import { mkdir, writeFile } from "fs/promises";
-import path from "path";
 import { auth } from "@/auth";
 import { validerAnnonce } from "@/src/domain/annonce";
-import { extensionPhoto, validerPhoto } from "@/src/domain/photo";
+import { validerPhoto } from "@/src/domain/photo";
 import { prisma } from "@/src/lib/prisma";
+import { enregistrerPhoto } from "@/src/lib/stockage-photo";
 
 export async function publierAnnonce(
   type: "offre" | "besoin",
@@ -30,11 +28,11 @@ export async function publierAnnonce(
 
   let photoUrl: string | null = null;
   if (fichier) {
-    const nom = `${randomUUID()}.${extensionPhoto(fichier.type)}`;
-    const dossier = path.join(process.cwd(), "public", "annonces");
-    await mkdir(dossier, { recursive: true });
-    await writeFile(path.join(dossier, nom), Buffer.from(await fichier.arrayBuffer()));
-    photoUrl = `/annonces/${nom}`;
+    try {
+      photoUrl = await enregistrerPhoto(fichier);
+    } catch {
+      return { ok: false, message: "La photo n’a pas pu être enregistrée." };
+    }
   }
 
   try {
