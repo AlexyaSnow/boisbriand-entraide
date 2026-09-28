@@ -1,22 +1,34 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { publierAnnonce } from "@/src/actions/annonce";
 
 type Props = { type: "offre" | "besoin" };
 
 export function FormulaireAnnonce({ type }: Props) {
   const [ok, setOk] = useState(false);
+  const [erreur, setErreur] = useState("");
+  const [attente, setAttente] = useState(false);
 
-  function envoyer(e: FormEvent<HTMLFormElement>) {
+  async function envoyer(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setOk(true);
+    setAttente(true);
+    setErreur("");
+    const data = new FormData(e.currentTarget);
+    const resultat = await publierAnnonce(type, data);
+    setAttente(false);
+    if (resultat.ok) {
+      setOk(true);
+      return;
+    }
+    setErreur(resultat.message);
   }
 
   if (ok) {
     return (
       <p className="ok">
-        {type === "offre" ? "Offre" : "Besoin"} prêt. La base de données n’est
-        pas encore branchée : rien n’est stocké pour de bon.
+        {type === "offre" ? "Offre" : "Besoin"} enregistré. Il apparaîtra à
+        l’accueil.
       </p>
     );
   }
@@ -50,8 +62,9 @@ export function FormulaireAnnonce({ type }: Props) {
         Le lieu de rencontre se choisit plus tard, dans la liste fermée. Pas
         d’adresse personnelle.
       </p>
-      <button className="btn btn-primary" type="submit">
-        Publier
+      {erreur ? <p className="etat ferme">{erreur}</p> : null}
+      <button className="btn btn-primary" type="submit" disabled={attente}>
+        {attente ? "Enregistrement…" : "Publier"}
       </button>
     </form>
   );
