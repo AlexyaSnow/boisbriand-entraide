@@ -13,7 +13,12 @@ const semaineBiblio = [{ debutMin: hm(10), finMin: hm(21) }];
 const weekEndBiblio = [{ debutMin: hm(10), finMin: hm(17) }];
 const semaineIga = [{ debutMin: hm(8), finMin: hm(21) }];
 const weekEndIga = [{ debutMin: hm(8), finMin: hm(20) }];
-const tousTim = [{ debutMin: hm(5), finMin: hm(23) }];
+const touteLaJournee = [{ debutMin: hm(0), finMin: hm(24) }];
+const tim6eSemaine = [{ debutMin: hm(5), finMin: hm(19, 30) }];
+const tim6eSam = [{ debutMin: hm(6), finMin: hm(18, 30) }];
+const tim6eDim = [{ debutMin: hm(7), finMin: hm(18) }];
+const timSancheSemaine = [{ debutMin: hm(5, 30), finMin: hm(20) }];
+const timSancheDim = [{ debutMin: hm(7), finMin: hm(20) }];
 
 export const POINTS_AUTORISES: PointAutorise[] = [
   {
@@ -65,7 +70,28 @@ export const POINTS_AUTORISES: PointAutorise[] = [
     nom: "Tim Hortons Faubourg",
     adresseAffichee: "2320, boul. du Faubourg",
     horaireConfirme: false,
-    horaires: [tousTim, tousTim, tousTim, tousTim, tousTim, tousTim, tousTim],
+    horaires: [touteLaJournee, touteLaJournee, touteLaJournee, touteLaJournee, touteLaJournee, touteLaJournee, touteLaJournee],
+  },
+  {
+    id: "tim-sanche",
+    nom: "Tim Hortons Montée Sanche",
+    adresseAffichee: "355, Montée Sanche",
+    horaireConfirme: false,
+    horaires: [timSancheDim, timSancheSemaine, timSancheSemaine, timSancheSemaine, timSancheSemaine, timSancheSemaine, timSancheSemaine],
+  },
+  {
+    id: "tim-6e",
+    nom: "Tim Hortons 6e Avenue",
+    adresseAffichee: "160, 6e Avenue",
+    horaireConfirme: true,
+    horaires: [tim6eDim, tim6eSemaine, tim6eSemaine, tim6eSemaine, tim6eSemaine, tim6eSemaine, tim6eSam],
+  },
+  {
+    id: "tim-cote-nord",
+    nom: "Tim Hortons Côte-Nord",
+    adresseAffichee: "Chemin de la Côte-Nord",
+    horaireConfirme: false,
+    horaires: [touteLaJournee, touteLaJournee, touteLaJournee, touteLaJournee, touteLaJournee, touteLaJournee, touteLaJournee],
   },
 ];
 
