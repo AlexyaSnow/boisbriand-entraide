@@ -45,17 +45,19 @@ export default async function Accueil() {
       ) : (
         <ul className="liste">
           {annonces.map((a) => (
-            <li key={a.id} className="annonce">
-              {a.photoUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img className="vignette" src={a.photoUrl} alt="" />
-              ) : null}
-              <div>
-                <span className="nom">{a.titre}</span>
-                <span className="meta">
-                  {a.type === "offre" ? i.offre : i.besoinLabel} · {a.categorie}
-                </span>
-              </div>
+            <li key={a.id}>
+              <Link className="annonce" href={`/annonce/${a.id}`}>
+                {a.photoUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img className="vignette" src={a.photoUrl} alt="" />
+                ) : null}
+                <div>
+                  <span className="nom">{a.titre}</span>
+                  <span className="meta">
+                    {a.type === "offre" ? i.offre : i.besoinLabel} · {a.categorie}
+                  </span>
+                </div>
+              </Link>
             </li>
           ))}
         </ul>
