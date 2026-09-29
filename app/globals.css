@@ -142,7 +142,6 @@ h2 {
 }
 
 .liste li {
-  padding: 0.85rem 1rem;
   border-top: 1px solid var(--ligne);
 }
 .liste li:first-child { border-top: 0; }
@@ -151,6 +150,8 @@ h2 {
   display: flex;
   gap: 0.85rem;
   align-items: center;
+  padding: 0.85rem 1rem;
+  text-decoration: none;
 }
 
 .vignette {
@@ -160,6 +161,16 @@ h2 {
   border-radius: 0.45rem;
   background: var(--ligne);
   flex-shrink: 0;
+}
+
+.photo-grande {
+  display: block;
+  width: 100%;
+  max-height: 22rem;
+  object-fit: cover;
+  border-radius: 0.8rem;
+  margin: 0 0 1.2rem;
+  background: var(--ligne);
 }
 
 .nom { display: block; font-weight: 650; }
