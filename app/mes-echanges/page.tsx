@@ -9,8 +9,8 @@ export default async function PageMesEchanges() {
   if (!session?.user?.id) {
     return (
       <main>
-        <h1>Mes échanges</h1>
-        <p className="lede">Connecte-toi pour voir tes jetons.</p>
+        <h1>Messages</h1>
+        <p className="lede">Connecte-toi pour voir tes conversations liées à un item.</p>
         <Link href="/connexion">Connexion</Link>
       </main>
     );
@@ -20,16 +20,19 @@ export default async function PageMesEchanges() {
     where: {
       OR: [{ offrantId: session.user.id }, { demandeurId: session.user.id }],
     },
-    include: { annonce: true },
+    include: {
+      annonce: true,
+      messages: { orderBy: { createdAt: "desc" }, take: 1 },
+    },
     orderBy: { createdAt: "desc" },
   });
 
   return (
     <main>
-      <h1>Mes échanges</h1>
-      <p className="lede">Un item, un jeton. L’accueil ne montre plus une annonce réservée.</p>
+      <h1>Messages</h1>
+      <p className="lede">Une conversation = un item. Pas de salon général.</p>
       {echanges.length === 0 ? (
-        <p className="hint">Aucun jeton pour l’instant.</p>
+        <p className="hint">Aucune conversation pour l’instant.</p>
       ) : (
         <ul className="liste">
           {echanges.map((e) => (
@@ -37,7 +40,9 @@ export default async function PageMesEchanges() {
               <Link className="annonce" href={`/echange/${e.jeton}`}>
                 <div>
                   <span className="nom">{e.annonce.titre}</span>
-                  <span className="meta">{e.statut}</span>
+                  <span className="meta">
+                    {e.messages[0]?.texte ?? "Aucun message encore"}
+                  </span>
                 </div>
               </Link>
             </li>
