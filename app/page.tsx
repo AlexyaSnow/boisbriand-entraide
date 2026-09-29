@@ -7,6 +7,16 @@ import { t } from "@/src/i18n/textes";
 
 export const dynamic = "force-dynamic";
 
+function libelleCategorie(
+  categorie: string,
+  i: ReturnType<typeof t>,
+): string {
+  if (categorie === "vetement") return i.vetement;
+  if (categorie === "denree") return i.denree;
+  if (categorie === "enfant") return i.enfant;
+  return i.autre;
+}
+
 export default async function Accueil() {
   const langue = await langueActuelle();
   const i = t(langue);
@@ -54,7 +64,8 @@ export default async function Accueil() {
                 <div>
                   <span className="nom">{a.titre}</span>
                   <span className="meta">
-                    {a.type === "offre" ? i.offre : i.besoinLabel} · {a.categorie}
+                    {a.type === "offre" ? i.offre : i.besoinLabel} ·{" "}
+                    {libelleCategorie(a.categorie, i)}
                   </span>
                 </div>
               </Link>
@@ -62,7 +73,7 @@ export default async function Accueil() {
           ))}
         </ul>
       )}
-      <h2 style={{ marginTop: "2rem" }}>{i.points}</h2>
+      <h2>{i.points}</h2>
       <ListePoints points={POINTS_AUTORISES} langue={langue} />
     </main>
   );
