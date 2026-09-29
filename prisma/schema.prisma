@@ -43,6 +43,7 @@ model User {
   reponses        Reponse[]
   echangesOfferts Echange[] @relation("Offrant")
   echangesRecus   Echange[] @relation("Demandeur")
+  messages        Message[]
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 }
@@ -119,5 +120,16 @@ model Echange {
   annonce     Annonce       @relation(fields: [annonceId], references: [id], onDelete: Cascade)
   offrant     User          @relation("Offrant", fields: [offrantId], references: [id])
   demandeur   User          @relation("Demandeur", fields: [demandeurId], references: [id])
+  messages    Message[]
   createdAt   DateTime      @default(now())
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  echangeId String
+  auteurId  String
+  texte     String
+  echange   Echange  @relation(fields: [echangeId], references: [id], onDelete: Cascade)
+  auteur    User     @relation(fields: [auteurId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
 }

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { auth } from "@/auth";
 import { chatAutorise } from "@/src/domain/echange";
 import { prisma } from "@/src/lib/prisma";
+import { FormulaireMessage } from "@/src/ui/FormulaireMessage";
 
 export default async function PageEchange({
   params,
@@ -13,7 +14,10 @@ export default async function PageEchange({
   const session = await auth();
   const echange = await prisma.echange.findUnique({
     where: { jeton },
-    include: { annonce: true },
+    include: {
+      annonce: true,
+      messages: { include: { auteur: true }, orderBy: { createdAt: "asc" } },
+    },
   });
   if (!echange) notFound();
 
@@ -23,7 +27,7 @@ export default async function PageEchange({
     return (
       <main>
         <h1>Jeton privé</h1>
-        <p className="lede">Seul les deux comptes de cet échange peuvent l’ouvrir.</p>
+        <p className="lede">Seuls les deux comptes de cet échange peuvent l’ouvrir.</p>
         <Link href="/">Retour</Link>
       </main>
     );
@@ -43,12 +47,28 @@ export default async function PageEchange({
         <Link href={`/annonce/${echange.annonceId}`}>{echange.annonce.titre}</Link>
       </p>
       <h1>Jeton</h1>
-      <p className="lede">Un item, un échange, un jeton.</p>
-      <p className="ok">
-        {ouvert
-          ? "Le fil de messages s’ouvrira ici. Pas de salon. Ce jeton meurt à la remise."
-          : "Échange clos. Plus de messages."}
-      </p>
+      <p className="lede">Un item, un échange, un jeton. Pas de salon.</p>
+
+      <ul className="liste">
+        {echange.messages.length === 0 ? (
+          <li className="point">
+            <span className="meta">Aucun message pour l’instant.</span>
+          </li>
+        ) : (
+          echange.messages.map((m) => (
+            <li className="point" key={m.id}>
+              <span className="nom">{m.auteur.name || m.auteur.email}</span>
+              <span className="meta">{m.texte}</span>
+            </li>
+          ))
+        )}
+      </ul>
+
+      {ouvert ? (
+        <FormulaireMessage jeton={jeton} />
+      ) : (
+        <p className="ok">Échange clos. Plus de messages.</p>
+      )}
     </main>
   );
 }
