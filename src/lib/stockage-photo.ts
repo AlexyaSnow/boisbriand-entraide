@@ -6,46 +6,60 @@ import sharp from "sharp";
 
 export async function enregistrerPhoto(fichier: File): Promise<string> {
   const brut = Buffer.from(await fichier.arrayBuffer());
-  const webp = await sharp(brut)
+  const nom = randomUUID();
+  const dossier = path.join(process.cwd(), "public", "annonces");
+  await mkdir(dossier, { recursive: true });
+
+  const plein = await sharp(brut)
     .rotate()
     .resize({ width: 1200, height: 1200, fit: "inside", withoutEnlargement: true })
     .webp({ quality: 68 })
     .toBuffer();
+  const mini = await sharp(brut)
+    .rotate()
+    .resize({ width: 400, height: 400, fit: "cover" })
+    .webp({ quality: 62 })
+    .toBuffer();
 
-  const nom = `${randomUUID()}.webp`;
-  const dossier = path.join(process.cwd(), "public", "annonces");
-  await mkdir(dossier, { recursive: true });
-  await writeFile(path.join(dossier, nom), webp);
-  const local = `/annonces/${nom}`;
+  await writeFile(path.join(dossier, `${nom}.webp`), plein);
+  await writeFile(path.join(dossier, `${nom}-sm.webp`), mini);
 
-  const base = process.env.S3_PUBLIC_BASE_URL?.replace(/\/$/, "");
-  const peutS3 = Boolean(
-    process.env.S3_BUCKET && process.env.S3_ACCESS_KEY_ID && base,
-  );
+  const localPlein = `/annonces/${nom}.webp`;
+  const localMini = `/annonces/${nom}-sm.webp`;
 
-  if (peutS3) {
+  if (process.env.S3_BUCKET && process.env.S3_ACCESS_KEY_ID) {
     try {
       const client = new S3Client({
         region: process.env.S3_REGION || "ca-central-1",
         credentials: {
-          accessKeyId: process.env.S3_ACCESS_KEY_ID as string,
+          accessKeyId: process.env.S3_ACCESS_KEY_ID,
           secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || "",
         },
       });
-      await client.send(
-        new PutObjectCommand({
-          Bucket: process.env.S3_BUCKET,
-          Key: `annonces/${nom}`,
-          Body: webp,
-          ContentType: "image/webp",
-          CacheControl: "public, max-age=31536000, immutable",
-        }),
-      );
-      return `${base}/annonces/${nom}`;
+      await Promise.all([
+        client.send(
+          new PutObjectCommand({
+            Bucket: process.env.S3_BUCKET,
+            Key: `annonces/${nom}.webp`,
+            Body: plein,
+            ContentType: "image/webp",
+            CacheControl: "public, max-age=31536000, immutable",
+          }),
+        ),
+        client.send(
+          new PutObjectCommand({
+            Bucket: process.env.S3_BUCKET,
+            Key: `annonces/${nom}-sm.webp`,
+            Body: mini,
+            ContentType: "image/webp",
+            CacheControl: "public, max-age=31536000, immutable",
+          }),
+        ),
+      ]);
     } catch (erreur) {
       console.error("S3 photo", erreur);
     }
   }
 
-  return local;
+  return localMini;
 }
