@@ -21,7 +21,7 @@ export function ListePoints({
         if (!etat.ouvert && etat.heure) libelle += ` · ${i.ouvreA} ${etat.heure}`;
         if (!point.horaireConfirme) libelle += ` · ${i.aVerifier}`;
         return (
-          <li key={point.id}>
+          <li className="point" key={point.id}>
             <span className="nom">{point.nom}</span>
             <span className="meta">{point.adresseAffichee}</span>
             <span className={etat.ouvert ? "etat ouvert" : "etat ferme"}>

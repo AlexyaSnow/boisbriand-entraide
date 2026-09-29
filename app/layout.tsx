@@ -7,9 +7,14 @@ import { t } from "@/src/i18n/textes";
 import { BasculeLangue } from "@/src/ui/BasculeLangue";
 import { AuthBoutons } from "@/src/ui/AuthBoutons";
 
-const sans = DM_Sans({ subsets: ["latin"], variable: "--font-sans" });
+const sans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-sans",
+});
 const serif = Fraunces({
   subsets: ["latin"],
+  weight: ["600"],
   variable: "--font-serif",
 });
 
