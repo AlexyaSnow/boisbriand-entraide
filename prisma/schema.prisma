@@ -25,18 +25,26 @@ enum StatutAnnonce {
   fermee
 }
 
+enum StatutEchange {
+  ouvert
+  remis
+  annule
+}
+
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  annonces      Annonce[]
-  reponses      Reponse[]
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id              String    @id @default(cuid())
+  name            String?
+  email           String?   @unique
+  emailVerified   DateTime?
+  image           String?
+  accounts        Account[]
+  sessions        Session[]
+  annonces        Annonce[]
+  reponses        Reponse[]
+  echangesOfferts Echange[] @relation("Offrant")
+  echangesRecus   Echange[] @relation("Demandeur")
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 }
 
 model Account {
@@ -86,6 +94,7 @@ model Annonce {
   auteurId  String?
   auteur    User?         @relation(fields: [auteurId], references: [id])
   reponses  Reponse[]
+  echange   Echange?
   createdAt DateTime      @default(now())
 }
 
@@ -98,4 +107,17 @@ model Reponse {
   createdAt DateTime @default(now())
 
   @@unique([annonceId, auteurId])
+}
+
+model Echange {
+  id          String        @id @default(cuid())
+  jeton       String        @unique
+  annonceId   String        @unique
+  offrantId   String
+  demandeurId String
+  statut      StatutEchange @default(ouvert)
+  annonce     Annonce       @relation(fields: [annonceId], references: [id], onDelete: Cascade)
+  offrant     User          @relation("Offrant", fields: [offrantId], references: [id])
+  demandeur   User          @relation("Demandeur", fields: [demandeurId], references: [id])
+  createdAt   DateTime      @default(now())
 }
