@@ -7,7 +7,7 @@ import sharp from "sharp";
 export async function enregistrerPhoto(fichier: File): Promise<string> {
   const brut = Buffer.from(await fichier.arrayBuffer());
   const nom = randomUUID();
-  const dossier = path.join(process.cwd(), "public", "annonces");
+  const dossier = path.join(process.cwd(), "uploads", "annonces");
   await mkdir(dossier, { recursive: true });
 
   const plein = await sharp(brut)
@@ -23,9 +23,6 @@ export async function enregistrerPhoto(fichier: File): Promise<string> {
 
   await writeFile(path.join(dossier, `${nom}.webp`), plein);
   await writeFile(path.join(dossier, `${nom}-sm.webp`), mini);
-
-  const localPlein = `/annonces/${nom}.webp`;
-  const localMini = `/annonces/${nom}-sm.webp`;
 
   if (process.env.S3_BUCKET && process.env.S3_ACCESS_KEY_ID) {
     try {
@@ -61,5 +58,5 @@ export async function enregistrerPhoto(fichier: File): Promise<string> {
     }
   }
 
-  return localMini;
+  return `/media/annonces/${nom}-sm.webp`;
 }
