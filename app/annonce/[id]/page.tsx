@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { auth } from "@/auth";
+import { estAdmin } from "@/src/domain/admin";
 import { langueActuelle } from "@/src/i18n/langue";
 import { t } from "@/src/i18n/textes";
 import { prisma } from "@/src/lib/prisma";
 import { BoutonRepondre } from "@/src/ui/BoutonRepondre";
 import { BoutonAccepter } from "@/src/ui/BoutonAccepter";
+import { BoutonSupprimer } from "@/src/ui/BoutonSupprimer";
 
 export default async function PageAnnonce({
   params,
@@ -16,6 +18,7 @@ export default async function PageAnnonce({
   const langue = await langueActuelle();
   const i = t(langue);
   const session = await auth();
+  const admin = estAdmin(session?.user?.email, process.env.ADMIN_EMAILS || "");
 
   const annonce = await prisma.annonce.findUnique({
     where: { id },
@@ -85,6 +88,12 @@ export default async function PageAnnonce({
           libelle={annonce.type === "offre" ? i.jePrends : i.jeDonne}
         />
       )}
+
+      {admin ? (
+        <div style={{ marginTop: "1.5rem" }}>
+          <BoutonSupprimer id={annonce.id} />
+        </div>
+      ) : null}
     </main>
   );
 }
