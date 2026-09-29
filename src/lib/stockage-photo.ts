@@ -18,12 +18,17 @@ export async function enregistrerPhoto(fichier: File): Promise<string> {
   await writeFile(path.join(dossier, nom), webp);
   const local = `/annonces/${nom}`;
 
-  if (process.env.S3_BUCKET && process.env.S3_ACCESS_KEY_ID) {
+  const base = process.env.S3_PUBLIC_BASE_URL?.replace(/\/$/, "");
+  const peutS3 = Boolean(
+    process.env.S3_BUCKET && process.env.S3_ACCESS_KEY_ID && base,
+  );
+
+  if (peutS3) {
     try {
       const client = new S3Client({
         region: process.env.S3_REGION || "ca-central-1",
         credentials: {
-          accessKeyId: process.env.S3_ACCESS_KEY_ID,
+          accessKeyId: process.env.S3_ACCESS_KEY_ID as string,
           secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || "",
         },
       });
@@ -36,13 +41,11 @@ export async function enregistrerPhoto(fichier: File): Promise<string> {
           CacheControl: "public, max-age=31536000, immutable",
         }),
       );
+      return `${base}/annonces/${nom}`;
     } catch (erreur) {
       console.error("S3 photo", erreur);
     }
   }
 
-  const base = process.env.S3_PUBLIC_BASE_URL?.replace(/\/$/, "");
-  const enLocal = (process.env.AUTH_URL || "").includes("localhost");
-  if (base && !enLocal) return `${base}/annonces/${nom}`;
   return local;
 }
