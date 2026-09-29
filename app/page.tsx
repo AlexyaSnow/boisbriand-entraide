@@ -44,6 +44,7 @@ export default async function Accueil() {
     jeton: string;
     titre: string;
     dernier: string;
+    photoUrl: string | null;
   }[] = [];
   if (session?.user?.id) {
     try {
@@ -65,6 +66,7 @@ export default async function Accueil() {
         jeton: e.jeton,
         titre: e.annonce.titre,
         dernier: e.messages[0]?.texte ?? i.aucunMessage,
+        photoUrl: e.annonce.photoUrl,
       }));
     } catch {
       conversations = [];
@@ -79,21 +81,28 @@ export default async function Accueil() {
         <Link className="btn btn-primary" href="/offre">
           {i.btnOffre}
         </Link>
-        <Link className="btn btn-ghost" href="/besoin">
+        <Link className="btn btn-primary" href="/besoin">
           {i.btnBesoin}
         </Link>
       </div>
 
       {session?.user ? (
         <>
-          <h2>{i.tesMessages}</h2>
+          <div className="bloc-titre">
+            <h2>{i.tesMessages}</h2>
+            <Link href="/mes-echanges">{i.tousMessages}</Link>
+          </div>
           {conversations.length === 0 ? (
             <p className="hint">{i.aucuneConversation}</p>
           ) : (
-            <ul className="liste">
+            <ul className="cartes">
               {conversations.map((c) => (
                 <li key={c.jeton}>
-                  <Link className="annonce" href={`/echange/${c.jeton}`}>
+                  <Link className="carte" href={`/echange/${c.jeton}`}>
+                    {c.photoUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img className="vignette" src={c.photoUrl} alt="" />
+                    ) : null}
                     <div>
                       <span className="nom">{c.titre}</span>
                       <span className="meta">{c.dernier}</span>
@@ -103,9 +112,6 @@ export default async function Accueil() {
               ))}
             </ul>
           )}
-          <p className="hint">
-            <Link href="/mes-echanges">{i.tousMessages}</Link>
-          </p>
         </>
       ) : null}
 

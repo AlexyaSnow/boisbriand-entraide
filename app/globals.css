@@ -1,10 +1,10 @@
 :root {
-  --papier: #f7f3ea;
-  --encre: #14110e;
+  --papier: #f4efe4;
+  --encre: #1b2419;
   --muet: #3f3a34;
   --ligne: #ddd2c0;
-  --vert: #1d5634;
-  --vert-fonce: #143d24;
+  --vert: #1c3d2a;
+  --vert-fonce: #14291c;
   --blanc: #fffdf8;
   --ouvert: #145c32;
   --ferme: #8a2a26;
@@ -29,9 +29,9 @@ body {
 a { color: inherit; }
 
 .shell {
-  max-width: 42rem;
+  max-width: 68rem;
   margin: 0 auto;
-  padding: 0 1.25rem 5rem;
+  padding: 0 1.5rem 5rem;
 }
 
 .top {
@@ -39,17 +39,17 @@ a { color: inherit; }
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1.3rem 0 1.25rem;
-  border-bottom: 1px solid var(--ligne);
-  margin-bottom: 2.1rem;
+  padding: 1.2rem 0 1.1rem;
+  margin-bottom: 2rem;
 }
 
 .marque {
   font-family: var(--font-serif), Georgia, serif;
   font-weight: 600;
-  font-size: 1.2rem;
-  letter-spacing: -0.02em;
+  font-size: 1.35rem;
+  letter-spacing: -0.03em;
   text-decoration: none;
+  color: var(--vert);
 }
 
 .nav {
@@ -57,8 +57,8 @@ a { color: inherit; }
   align-items: center;
   flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 0.75rem;
-  font-size: 1rem;
+  gap: 0.9rem;
+  font-size: 0.98rem;
   font-weight: 600;
 }
 
@@ -88,56 +88,88 @@ a { color: inherit; }
 h1 {
   font-family: var(--font-serif), Georgia, serif;
   font-weight: 600;
-  font-size: 2.35rem;
-  line-height: 1.2;
-  letter-spacing: -0.03em;
-  margin: 0 0 0.85rem;
+  font-size: clamp(2.1rem, 5vw, 3.4rem);
+  line-height: 1.12;
+  letter-spacing: -0.04em;
+  margin: 0 0 1rem;
+  white-space: pre-line;
+  max-width: 16ch;
 }
 
 .lede {
   color: var(--muet);
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   line-height: 1.55;
-  margin: 0 0 1.9rem;
+  margin: 0 0 1.6rem;
   max-width: 36rem;
 }
 
 .actions {
-  display: grid;
-  gap: 0.8rem;
-  margin-bottom: 2.6rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 2.8rem;
 }
 
 .btn {
-  display: block;
+  display: inline-block;
   text-align: center;
   text-decoration: none;
   border: 0;
   cursor: pointer;
   font: inherit;
   font-weight: 700;
-  padding: 1.05rem 1.15rem;
-  border-radius: 0.9rem;
+  padding: 0.95rem 1.35rem;
+  border-radius: 2rem;
 }
 
 .btn-primary { background: var(--vert); color: #fff; }
 .btn-primary:hover { background: var(--vert-fonce); }
 
 .btn-ghost {
-  background: var(--blanc);
-  color: var(--encre);
-  border: 1px solid var(--ligne);
-  box-shadow: var(--ombre);
+  background: var(--vert);
+  color: #fff;
 }
+.btn-ghost:hover { background: var(--vert-fonce); }
 
 h2 {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 700;
-  letter-spacing: 0;
-  text-transform: none;
   color: var(--encre);
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.85rem;
 }
+
+.bloc-titre {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.85rem;
+}
+.bloc-titre h2 { margin: 0; }
+.bloc-titre a { font-size: 0.95rem; color: var(--muet); }
+
+.cartes {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2.4rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1rem;
+}
+
+.carte {
+  display: flex;
+  gap: 0.9rem;
+  align-items: center;
+  padding: 1rem;
+  background: var(--blanc);
+  border: 1px solid var(--ligne);
+  border-radius: 1rem;
+  text-decoration: none;
+  box-shadow: var(--ombre);
+}
+.carte:hover { background: #fbf6ee; }
 
 .liste {
   list-style: none;
@@ -162,15 +194,13 @@ h2 {
 }
 .annonce:hover { background: #fbf6ee; }
 
-.point {
-  padding: 1.15rem 1.2rem;
-}
+.point { padding: 1.15rem 1.2rem; }
 
 .vignette {
-  width: 4.8rem;
-  height: 4.8rem;
+  width: 4.4rem;
+  height: 4.4rem;
   object-fit: cover;
-  border-radius: 0.6rem;
+  border-radius: 0.7rem;
   background: var(--ligne);
   flex-shrink: 0;
 }
@@ -189,13 +219,13 @@ h2 {
 .nom {
   display: block;
   font-weight: 700;
-  font-size: 1.12rem;
+  font-size: 1.08rem;
   line-height: 1.35;
 }
 .meta {
   display: block;
   color: var(--muet);
-  font-size: 1rem;
+  font-size: 0.98rem;
   font-weight: 500;
   margin-top: 0.2rem;
 }
