@@ -116,6 +116,7 @@ model Echange {
   annonceId   String        @unique
   offrantId   String
   demandeurId String
+  pointId     String?
   statut      StatutEchange @default(ouvert)
   annonce     Annonce       @relation(fields: [annonceId], references: [id], onDelete: Cascade)
   offrant     User          @relation("Offrant", fields: [offrantId], references: [id])

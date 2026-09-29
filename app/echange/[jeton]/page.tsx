@@ -2,8 +2,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { auth } from "@/auth";
 import { chatAutorise } from "@/src/domain/echange";
+import { POINTS_AUTORISES } from "@/src/domain/points";
 import { prisma } from "@/src/lib/prisma";
 import { FormulaireMessage } from "@/src/ui/FormulaireMessage";
+import { FormulaireLieu } from "@/src/ui/FormulaireLieu";
 
 export default async function PageEchange({
   params,
@@ -41,13 +43,25 @@ export default async function PageEchange({
     statut: echange.statut,
   });
 
+  const lieu = POINTS_AUTORISES.find((p) => p.id === echange.pointId);
+
   return (
     <main>
       <p className="hint">
         <Link href={`/annonce/${echange.annonceId}`}>{echange.annonce.titre}</Link>
+        {" · "}
+        <Link href="/mes-echanges">Mes échanges</Link>
       </p>
       <h1>Jeton</h1>
       <p className="lede">Un item, un échange, un jeton. Pas de salon.</p>
+      {lieu ? (
+        <p className="ok">
+          Lieu : {lieu.nom} — {lieu.adresseAffichee}
+        </p>
+      ) : (
+        <p className="hint">Aucun lieu choisi pour l’instant.</p>
+      )}
+      {ouvert ? <FormulaireLieu jeton={jeton} actuel={echange.pointId} /> : null}
 
       <ul className="liste">
         {echange.messages.length === 0 ? (
