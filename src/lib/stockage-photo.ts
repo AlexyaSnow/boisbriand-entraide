@@ -28,6 +28,7 @@ export async function enregistrerPhoto(fichier: File): Promise<string> {
         Key: `annonces/${nom}`,
         Body: webp,
         ContentType: "image/webp",
+        CacheControl: "public, max-age=31536000, immutable",
       }),
     );
     const base = process.env.S3_PUBLIC_BASE_URL?.replace(/\/$/, "");
