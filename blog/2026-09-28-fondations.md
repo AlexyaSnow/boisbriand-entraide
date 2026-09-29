@@ -43,5 +43,3 @@ Le dépôt contient aujourd’hui : le cœur métier testé (liste fermée des l
 - Google comme seule porte. Une personne sans compte Gmail est exclue. Un lien magique par courriel pourra s’ajouter plus tard.
 - La granularité des heures d’ouverture par lieu (à vérifier une à une à Boisbriand).
 - L’approbation du cadrage par la personne tutrice : trop étroit ou juste assez.
-
-Suite : [Prototype local, lecture critique](2026-09-28-prototype.md).
