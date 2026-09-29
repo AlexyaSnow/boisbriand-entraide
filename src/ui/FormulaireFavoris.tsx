@@ -13,6 +13,12 @@ export function FormulaireFavoris({ epingles }: { epingles: string[] }) {
     if (!r.ok) setErreur(r.message);
   }
 
+  async function retirer(id: string) {
+    setErreur("");
+    const r = await retirerFavori(id);
+    if (!r.ok) setErreur(r.message);
+  }
+
   return (
     <>
       <ul className="liste">
@@ -28,7 +34,7 @@ export function FormulaireFavoris({ epingles }: { epingles: string[] }) {
               <li className="point" key={id}>
                 <span className="nom">{p.nom}</span>
                 <span className="meta">{p.adresseAffichee}</span>
-                <form action={() => retirerFavori(id)}>
+                <form action={() => retirer(id)}>
                   <button className="btn btn-ghost" type="submit">
                     Retirer
                   </button>
