@@ -2,6 +2,7 @@ import Link from "next/link";
 import { auth } from "@/auth";
 import { POINTS_AUTORISES } from "@/src/domain/points";
 import { ListePoints } from "@/src/ui/ListePoints";
+import { Vignette } from "@/src/ui/Vignette";
 import { prisma } from "@/src/lib/prisma";
 import { langueActuelle } from "@/src/i18n/langue";
 import { t } from "@/src/i18n/textes";
@@ -99,10 +100,7 @@ export default async function Accueil() {
               {conversations.map((c) => (
                 <li key={c.jeton}>
                   <Link className="carte" href={`/echange/${c.jeton}`}>
-                    {c.photoUrl ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img className="vignette" src={c.photoUrl} alt="" />
-                    ) : null}
+                    <Vignette src={c.photoUrl} />
                     <div>
                       <span className="nom">{c.titre}</span>
                       <span className="meta">{c.dernier}</span>
@@ -123,10 +121,7 @@ export default async function Accueil() {
           {annonces.map((a) => (
             <li key={a.id}>
               <Link className="annonce" href={`/annonce/${a.id}`}>
-                {a.photoUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img className="vignette" src={a.photoUrl} alt="" />
-                ) : null}
+                <Vignette src={a.photoUrl} />
                 <div>
                   <span className="nom">{a.titre}</span>
                   <span className="meta">

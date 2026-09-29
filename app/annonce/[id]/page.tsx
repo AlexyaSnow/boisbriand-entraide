@@ -8,6 +8,7 @@ import { prisma } from "@/src/lib/prisma";
 import { BoutonRepondre } from "@/src/ui/BoutonRepondre";
 import { BoutonAccepter } from "@/src/ui/BoutonAccepter";
 import { BoutonSupprimer } from "@/src/ui/BoutonSupprimer";
+import { Vignette } from "@/src/ui/Vignette";
 
 export default async function PageAnnonce({
   params,
@@ -45,10 +46,7 @@ export default async function PageAnnonce({
         {annonce.type === "offre" ? i.offre : i.besoinLabel}
         {annonce.statut === "reservee" ? " · réservée" : ""}
       </p>
-      {annonce.photoUrl ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img className="photo-grande" src={annonce.photoUrl} alt="" />
-      ) : null}
+      <Vignette src={annonce.photoUrl} grande />
       {annonce.detail ? <p>{annonce.detail}</p> : null}
       <p className="hint">{i.hintLieu}</p>
 
