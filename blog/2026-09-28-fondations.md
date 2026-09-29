@@ -21,9 +21,11 @@ Je construis un service web transactionnel étroit. On publie une offre ou un be
 | Tests | Vitest |
 | CI | GitHub Actions, à chaque poussée |
 | Reproductibilité | Docker Compose pour Postgres |
-| Hébergement | service payant portable (Fly, Railway, Render ou VPS), décidé au déploiement |
+| Hébergement | **Fly.io**, choix provisoire |
 
-Le dépôt contient aujourd’hui : le cœur métier testé (liste fermée des lieux, jeton), la pipeline CI, l’interface Next.js, Postgres, la publication d’une annonce, et la connexion Google.
+Fly.io : application et Postgres chez le même fournisseur, export SQL possible, région proche (Toronto / Montréal selon disponibilité). Je changerais pour un VPS si la facture ou le verrouillage du fournisseur devient le vrai risque.
+
+Le dépôt contient aujourd’hui le cœur métier testé (lieux, horaires, règles d’annonce, jeton, admin), la pipeline CI, et un prototype local Next.js + Postgres + Google.
 
 ## Alternatives considérées
 
@@ -37,9 +39,11 @@ Le dépôt contient aujourd’hui : le cœur métier testé (liste fermée des l
 
 **Canaux postal et friperie dès le Jalon 1.** Ambition réelle, mauvais calibrage solo. Ils restent des issues « plus tard ».
 
+**Railway ou Render.** Écartés comme premier choix : plus simples à démarrer, moins clairs pour un export SQL long terme. Restent des replis.
+
 ## Ce qui est encore incertain
 
-- L’hébergeur exact. Je paierai ; je refuse un verrouillage sans export SQL.
+- La région Fly exacte et le coût mensuel réel après un premier déploiement.
 - Google comme seule porte. Une personne sans compte Gmail est exclue. Un lien magique par courriel pourra s’ajouter plus tard.
 - La granularité des heures d’ouverture par lieu (à vérifier une à une à Boisbriand).
 - L’approbation du cadrage par la personne tutrice : trop étroit ou juste assez.
