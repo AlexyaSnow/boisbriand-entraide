@@ -7,9 +7,11 @@ import { choisirLieuJeton } from "@/src/actions/lieu";
 export function FormulaireLieu({
   jeton,
   actuel,
+  creneau,
 }: {
   jeton: string;
   actuel: string | null;
+  creneau: string;
 }) {
   const [erreur, setErreur] = useState("");
 
@@ -34,8 +36,12 @@ export function FormulaireLieu({
           ))}
         </select>
       </label>
+      <label>
+        Jour et heure
+        <input type="datetime-local" name="creneau" defaultValue={creneau} required />
+      </label>
       <button className="btn btn-ghost" type="submit">
-        Enregistrer le lieu
+        Enregistrer le rendez-vous
       </button>
       {erreur ? <p className="etat ferme">{erreur}</p> : null}
     </form>

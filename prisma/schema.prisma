@@ -112,18 +112,19 @@ model Reponse {
 }
 
 model Echange {
-  id          String        @id @default(cuid())
-  jeton       String        @unique
-  annonceId   String        @unique
-  offrantId   String
-  demandeurId String
-  pointId     String?
-  statut      StatutEchange @default(ouvert)
-  annonce     Annonce       @relation(fields: [annonceId], references: [id], onDelete: Cascade)
-  offrant     User          @relation("Offrant", fields: [offrantId], references: [id])
-  demandeur   User          @relation("Demandeur", fields: [demandeurId], references: [id])
-  messages    Message[]
-  createdAt   DateTime      @default(now())
+  id           String        @id @default(cuid())
+  jeton        String        @unique
+  annonceId    String        @unique
+  offrantId    String
+  demandeurId  String
+  pointId      String?
+  creneauDebut DateTime?
+  statut       StatutEchange @default(ouvert)
+  annonce      Annonce       @relation(fields: [annonceId], references: [id], onDelete: Cascade)
+  offrant      User          @relation("Offrant", fields: [offrantId], references: [id])
+  demandeur    User          @relation("Demandeur", fields: [demandeurId], references: [id])
+  messages     Message[]
+  createdAt    DateTime      @default(now())
 }
 
 model Message {

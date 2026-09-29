@@ -8,6 +8,21 @@ import { FormulaireMessage } from "@/src/ui/FormulaireMessage";
 import { FormulaireLieu } from "@/src/ui/FormulaireLieu";
 import { BoutonsCloture } from "@/src/ui/BoutonsCloture";
 
+function versDatetimeLocal(d: Date | null): string {
+  if (!d) return "";
+  const p = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Toronto",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(d);
+  const g = (t: string) => p.find((x) => x.type === t)?.value ?? "";
+  return `${g("year")}-${g("month")}-${g("day")}T${g("hour")}:${g("minute")}`;
+}
+
 export default async function PageEchange({
   params,
 }: {
@@ -45,6 +60,11 @@ export default async function PageEchange({
   });
 
   const lieu = POINTS_AUTORISES.find((p) => p.id === echange.pointId);
+  const quand = echange.creneauDebut
+    ? echange.creneauDebut.toLocaleString("fr-CA", {
+        timeZone: "America/Toronto",
+      })
+    : null;
 
   return (
     <main>
@@ -58,11 +78,18 @@ export default async function PageEchange({
       {lieu ? (
         <p className="ok">
           Lieu : {lieu.nom} — {lieu.adresseAffichee}
+          {quand ? ` · ${quand}` : ""}
         </p>
       ) : (
-        <p className="hint">Aucun lieu choisi pour l’instant.</p>
+        <p className="hint">Aucun lieu ni créneau pour l’instant.</p>
       )}
-      {ouvert ? <FormulaireLieu jeton={jeton} actuel={echange.pointId} /> : null}
+      {ouvert ? (
+        <FormulaireLieu
+          jeton={jeton}
+          actuel={echange.pointId}
+          creneau={versDatetimeLocal(echange.creneauDebut)}
+        />
+      ) : null}
 
       <ul className="liste">
         {echange.messages.length === 0 ? (
