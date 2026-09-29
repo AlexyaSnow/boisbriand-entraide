@@ -1,17 +1,21 @@
 import Link from "next/link";
 import { auth } from "@/auth";
 import { prisma } from "@/src/lib/prisma";
+import { langueActuelle } from "@/src/i18n/langue";
+import { t } from "@/src/i18n/textes";
 
 export const dynamic = "force-dynamic";
 
 export default async function PageMesEchanges() {
+  const langue = await langueActuelle();
+  const i = t(langue);
   const session = await auth();
   if (!session?.user?.id) {
     return (
       <main>
-        <h1>Messages</h1>
-        <p className="lede">Connecte-toi pour voir tes conversations liées à un item.</p>
-        <Link href="/connexion">Connexion</Link>
+        <h1>{i.messagesTitre}</h1>
+        <p className="lede">{i.messagesConnexion}</p>
+        <Link href="/connexion">{i.connexion}</Link>
       </main>
     );
   }
@@ -29,10 +33,10 @@ export default async function PageMesEchanges() {
 
   return (
     <main>
-      <h1>Messages</h1>
-      <p className="lede">Une conversation = un item. Pas de salon général.</p>
+      <h1>{i.messagesTitre}</h1>
+      <p className="lede">{i.messagesLede}</p>
       {echanges.length === 0 ? (
-        <p className="hint">Aucune conversation pour l’instant.</p>
+        <p className="hint">{i.aucuneConversationPage}</p>
       ) : (
         <ul className="liste">
           {echanges.map((e) => (
@@ -41,7 +45,7 @@ export default async function PageMesEchanges() {
                 <div>
                   <span className="nom">{e.annonce.titre}</span>
                   <span className="meta">
-                    {e.messages[0]?.texte ?? "Aucun message encore"}
+                    {e.messages[0]?.texte ?? i.aucunMessage}
                   </span>
                 </div>
               </Link>

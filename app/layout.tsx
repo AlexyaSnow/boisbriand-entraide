@@ -42,8 +42,8 @@ export default async function RootLayout({
             <nav className="nav">
               <Link href="/offre">{i.offrir}</Link>
               <Link href="/besoin">{i.besoin}</Link>
-              <Link href="/mes-echanges">Messages</Link>
-              <Link href="/favoris">Lieux</Link>
+              <Link href="/mes-echanges">{i.messages}</Link>
+              <Link href="/favoris">{i.lieux}</Link>
               <BasculeLangue actuelle={langue} />
               <AuthBoutons langue={langue} />
             </nav>

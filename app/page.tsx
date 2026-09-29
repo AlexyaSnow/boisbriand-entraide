@@ -64,7 +64,7 @@ export default async function Accueil() {
       conversations = rows.map((e) => ({
         jeton: e.jeton,
         titre: e.annonce.titre,
-        dernier: e.messages[0]?.texte ?? "Aucun message encore",
+        dernier: e.messages[0]?.texte ?? i.aucunMessage,
       }));
     } catch {
       conversations = [];
@@ -86,9 +86,9 @@ export default async function Accueil() {
 
       {session?.user ? (
         <>
-          <h2>Tes messages</h2>
+          <h2>{i.tesMessages}</h2>
           {conversations.length === 0 ? (
-            <p className="hint">Aucune conversation en cours.</p>
+            <p className="hint">{i.aucuneConversation}</p>
           ) : (
             <ul className="liste">
               {conversations.map((c) => (
@@ -104,7 +104,7 @@ export default async function Accueil() {
             </ul>
           )}
           <p className="hint">
-            <Link href="/mes-echanges">Tous les messages</Link>
+            <Link href="/mes-echanges">{i.tousMessages}</Link>
           </p>
         </>
       ) : null}
