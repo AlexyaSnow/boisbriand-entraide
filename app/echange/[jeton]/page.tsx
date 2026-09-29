@@ -6,6 +6,7 @@ import { POINTS_AUTORISES } from "@/src/domain/points";
 import { prisma } from "@/src/lib/prisma";
 import { FormulaireMessage } from "@/src/ui/FormulaireMessage";
 import { FormulaireLieu } from "@/src/ui/FormulaireLieu";
+import { BoutonsCloture } from "@/src/ui/BoutonsCloture";
 
 export default async function PageEchange({
   params,
@@ -50,7 +51,7 @@ export default async function PageEchange({
       <p className="hint">
         <Link href={`/annonce/${echange.annonceId}`}>{echange.annonce.titre}</Link>
         {" · "}
-        <Link href="/mes-echanges">Mes échanges</Link>
+        <Link href="/mes-echanges">Messages</Link>
       </p>
       <h1>Jeton</h1>
       <p className="lede">Un item, un échange, un jeton. Pas de salon.</p>
@@ -79,9 +80,14 @@ export default async function PageEchange({
       </ul>
 
       {ouvert ? (
-        <FormulaireMessage jeton={jeton} />
+        <>
+          <FormulaireMessage jeton={jeton} />
+          <BoutonsCloture jeton={jeton} />
+        </>
       ) : (
-        <p className="ok">Échange clos. Plus de messages.</p>
+        <p className="ok">
+          Échange {echange.statut === "remis" ? "remis" : "annulé"}. Plus de messages.
+        </p>
       )}
     </main>
   );
