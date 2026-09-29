@@ -32,20 +32,21 @@ enum StatutEchange {
 }
 
 model User {
-  id              String    @id @default(cuid())
+  id              String       @id @default(cuid())
   name            String?
-  email           String?   @unique
+  email           String?      @unique
   emailVerified   DateTime?
   image           String?
   accounts        Account[]
   sessions        Session[]
   annonces        Annonce[]
   reponses        Reponse[]
-  echangesOfferts Echange[] @relation("Offrant")
-  echangesRecus   Echange[] @relation("Demandeur")
+  echangesOfferts Echange[]    @relation("Offrant")
+  echangesRecus   Echange[]    @relation("Demandeur")
   messages        Message[]
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  favoris         FavoriLieu[]
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
 }
 
 model Account {
@@ -133,4 +134,14 @@ model Message {
   echange   Echange  @relation(fields: [echangeId], references: [id], onDelete: Cascade)
   auteur    User     @relation(fields: [auteurId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
+}
+
+model FavoriLieu {
+  id        String   @id @default(cuid())
+  userId    String
+  pointId   String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, pointId])
 }
