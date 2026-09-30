@@ -32,3 +32,8 @@ export function chatAutorise(echange: Echange): boolean {
 export function cloturer(echange: Echange, fin: "remis" | "annule"): Echange {
   return { ...echange, statut: fin };
 }
+
+/** Une famille aidée = un jeton marqué remis. Pas un compte, pas un chat ouvert. */
+export function nombreFamillesAidees(statuts: StatutEchange[]): number {
+  return statuts.filter((s) => s === "remis").length;
+}

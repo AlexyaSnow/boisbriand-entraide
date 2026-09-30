@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { chatAutorise, cloturer, creerEchange } from "../src/domain/echange";
+import {
+  chatAutorise,
+  cloturer,
+  creerEchange,
+  nombreFamillesAidees,
+} from "../src/domain/echange";
 
 describe("échange",
   () => {
@@ -45,5 +50,12 @@ describe("échange",
         });
         const annule = cloturer(ouvert, "annule");
         expect(chatAutorise(annule)).toBe(false);
+      });
+
+    it("ne compte que les remises comme familles aidées",
+      () => {
+        expect(nombreFamillesAidees([])).toBe(0);
+        expect(nombreFamillesAidees(["ouvert", "annule"])).toBe(0);
+        expect(nombreFamillesAidees(["remis", "ouvert", "remis", "annule"])).toBe(2);
       });
   });
