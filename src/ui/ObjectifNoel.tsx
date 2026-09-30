@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import type { Langue } from "@/src/i18n/textes";
 import { t } from "@/src/i18n/textes";
 
-const OBJECTIF = 100;
+const FAMILLES = 100;
+const PANIERS = 10;
 const FIN = Date.parse("2026-12-31T23:59:59-05:00");
 
 function decoupe(ms: number) {
@@ -23,9 +24,11 @@ function deux(n: number) {
 
 export function ObjectifNoel({
   aidees,
+  paniers,
   langue,
 }: {
   aidees: number;
+  paniers: number;
   langue: Langue;
 }) {
   const i = t(langue);
@@ -36,7 +39,8 @@ export function ObjectifNoel({
     return () => clearInterval(id);
   }, []);
 
-  const pct = Math.min(100, Math.round((aidees / OBJECTIF) * 100));
+  const pctF = Math.min(100, Math.round((aidees / FAMILLES) * 100));
+  const pctP = Math.min(100, Math.round((paniers / PANIERS) * 100));
 
   return (
     <div className="objectif-noel">
@@ -59,15 +63,30 @@ export function ObjectifNoel({
           <span className="objectif-lab">{i.noelSecondes}</span>
         </div>
       </div>
-      <div className="objectif-barre" aria-hidden="true">
-        <span style={{ width: `${Math.max(pct, 2)}%` }} />
+      <div className="objectif-goals">
+        <div>
+          <p className="objectif-titre">{i.noelFamillesTitre}</p>
+          <div className="objectif-barre" aria-hidden="true">
+            <span style={{ width: `${Math.max(pctF, 2)}%` }} />
+          </div>
+          <p className="objectif-score">
+            <strong>
+              {aidees} / {FAMILLES}
+            </strong>
+          </p>
+        </div>
+        <div>
+          <p className="objectif-titre">{i.noelPaniersTitre}</p>
+          <div className="objectif-barre" aria-hidden="true">
+            <span style={{ width: `${Math.max(pctP, 2)}%` }} />
+          </div>
+          <p className="objectif-score">
+            <strong>
+              {paniers} / {PANIERS}
+            </strong>
+          </p>
+        </div>
       </div>
-      <p className="objectif-score">
-        <strong>
-          {aidees} / {OBJECTIF}
-        </strong>{" "}
-        {i.noelScore}
-      </p>
       <p className="objectif-note">{i.noelNote}</p>
     </div>
   );
