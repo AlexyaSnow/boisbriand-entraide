@@ -16,6 +16,7 @@ enum Categorie {
   vetement
   denree
   enfant
+  panier
   autre
 }
 
