@@ -9,7 +9,7 @@ export function Vignette({
 }) {
   if (!src) return <span className={grande ? "photo-grande vide" : "vignette vide"} />;
   const affiche = grande ? src.replace("-sm.webp", ".webp") : src;
-  return (
+  const img = (
     // eslint-disable-next-line @next/next/no-img-element
     <img
       className={grande ? "photo-grande" : "vignette"}
@@ -20,5 +20,11 @@ export function Vignette({
       loading={grande ? "eager" : "lazy"}
       decoding="async"
     />
+  );
+  if (!grande) return img;
+  return (
+    <a href={affiche} target="_blank" rel="noreferrer">
+      {img}
+    </a>
   );
 }
