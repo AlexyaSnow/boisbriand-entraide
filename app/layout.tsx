@@ -6,6 +6,7 @@ import { langueActuelle } from "@/src/i18n/langue";
 import { t } from "@/src/i18n/textes";
 import { BasculeLangue } from "@/src/ui/BasculeLangue";
 import { AuthBoutons } from "@/src/ui/AuthBoutons";
+import { Pied } from "@/src/ui/Pied";
 
 const sans = DM_Sans({
   subsets: ["latin"],
@@ -49,6 +50,7 @@ export default async function RootLayout({
             </nav>
           </header>
           {children}
+          <Pied langue={langue} />
         </div>
       </body>
     </html>
