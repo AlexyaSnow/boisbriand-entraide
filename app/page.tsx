@@ -94,19 +94,31 @@ export default async function Accueil() {
 
   return (
     <main>
-      <h1>{i.titre}</h1>
-      <p className="lede">{i.lede}</p>
-      <p className="compteur" aria-live="polite">
-        {libelleCompteur(famillesAidees, i)}
-      </p>
-      <div className="actions">
-        <Link className="btn btn-primary" href="/offre">
-          {i.btnOffre}
-        </Link>
-        <Link className="btn btn-primary" href="/besoin">
-          {i.btnBesoin}
-        </Link>
-      </div>
+      <section className="hero">
+        <div>
+          <h1>{i.titre}</h1>
+          <p className="lede">{i.lede}</p>
+          <p className="compteur" aria-live="polite">
+            {libelleCompteur(famillesAidees, i)}
+          </p>
+          <div className="actions">
+            <Link className="btn btn-primary" href="/offre">
+              {i.btnOffre}
+            </Link>
+            <Link className="btn btn-ghost" href="/besoin">
+              {i.btnBesoin}
+            </Link>
+          </div>
+        </div>
+        <svg className="branche" viewBox="0 0 200 260" fill="none" aria-hidden="true">
+          <path d="M100 250 C90 180 40 140 70 40" stroke="#2d5a40" strokeWidth="1.4" />
+          <path d="M96 160 C130 140 160 90 150 30" stroke="#2d5a40" strokeWidth="1.2" />
+          <ellipse cx="68" cy="48" rx="16" ry="8" stroke="#2d5a40" />
+          <ellipse cx="88" cy="70" rx="14" ry="7" stroke="#2d5a40" />
+          <ellipse cx="148" cy="36" rx="16" ry="8" stroke="#2d5a40" />
+          <ellipse cx="132" cy="64" rx="13" ry="7" stroke="#2d5a40" />
+        </svg>
+      </section>
 
       {session?.user ? (
         <>
@@ -144,11 +156,11 @@ export default async function Accueil() {
               <Link className="tuile" href={`/annonce/${a.id}`}>
                 <Vignette src={a.photoUrl} />
                 <div className="tuile-texte">
-                  <span className="nom">{a.titre}</span>
-                  <span className="meta">
-                    {a.type === "offre" ? i.offre : i.besoinLabel} ·{" "}
-                    {libelleCategorie(a.categorie, i)}
+                  <span className={`badge ${a.type === "besoin" ? "besoin" : ""}`}>
+                    {a.type === "offre" ? i.offre : i.besoinLabel}
                   </span>
+                  <span className="nom">{a.titre}</span>
+                  <span className="meta">{libelleCategorie(a.categorie, i)}</span>
                 </div>
               </Link>
             </li>
@@ -156,6 +168,7 @@ export default async function Accueil() {
         </ul>
       )}
       <h2>{i.points}</h2>
+      <p className="hint">{i.lieuxNote}</p>
       <ListePoints points={POINTS_AUTORISES} langue={langue} />
     </main>
   );
