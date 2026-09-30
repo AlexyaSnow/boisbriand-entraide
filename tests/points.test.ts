@@ -6,6 +6,8 @@ describe("liste fermée des points",
     it("accepte un point de la liste",
       () => {
         expect(estPointAutorise("biblio-grande-allee")).toBe(true);
+        expect(estPointAutorise("biblio-ste-therese")).toBe(true);
+        expect(estPointAutorise("iga-blainville-est")).toBe(true);
       });
 
     it("refuse une adresse libre",
