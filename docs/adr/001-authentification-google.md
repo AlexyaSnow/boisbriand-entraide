@@ -1,40 +1,55 @@
-# ADR 001 — Authentification avec un compte Google
+# ADR 001 — Identification des intervenants
 
-- Statut : accepté
-- Date : 2026-09-29
-- Décision : connexion uniquement via OAuth Google (Auth.js)
+| | |
+| --- | --- |
+| Statut | Accepté |
+| Date | 2026-09-29 |
+| Portée | Canal A, itération 1 |
+| Qualités visées | Confidentialité, simplicité d’usage, évolutivité |
 
-## Contexte
+## 1. Énoncé du problème
 
-L’application permet de publier une offre ou un besoin, puis d’ouvrir un jeton entre deux personnes. Il faut savoir qui publie et qui répond, sans créer un réseau social.
+Le métier relie deux rôles autour d’un seul item : celui qui publie, celui qui répond. L’acceptation produit un jeton, unique, qui meurt à la remise ou à l’annulation. Sans identité stable, on ne peut ni attribuer une annonce, ni borner le fil de discussion, ni exercer le droit de retrait (suppression d’une fiche abusive).
 
-Le public visé inclut des parents et des aînés peu à l’aise avec le web. Une deuxième boîte « créer un mot de passe » augmente les abandons et les comptes oubliés.
+Il faut donc un mécanisme d’authentification. Il ne doit pas introduire un graphe social (abonnements, fil, réactions), ni une gestion locale de secrets si une solution éprouvée suffit.
 
-## Options regardées
+## 2. Critères
 
-1. Compte courriel + mot de passe maison  
-2. Connexion Facebook / fil social  
-3. Compte Google seulement (OAuth)  
-4. Pas de compte, tout public
+Les options sont jugées sur quatre critères, ordonnés :
 
-## Décision
+1. **Minimisation des secrets hébergés** — l’application ne doit pas devenir un coffre-fort de mots de passe.
+2. **Séparation d’avec le social** — le fournisseur ne doit pas ramener likes, commentaires ou graphe d’amis dans le produit.
+3. **Charge cognitive** — une personne peu habituée au web doit pouvoir publier sans créer un n-ème couple identifiant / mot de passe.
+4. **Coût de substitution** — changer de fournisseur plus tard ne doit pas forcer à réécrire les règles d’échange.
 
-Option 3.
+## 3. Solutions examinées
 
-Google fournit un identifiant stable (courriel + id) sans que je stocke un mot de passe. Auth.js gère la session. Un compte suffit pour publier, répondre, et ouvrir un jeton.
+| | Secrets chez nous | Couplage social | Compte à créer | Substitution |
+| --- | --- | --- | --- | --- |
+| A. Courriel + mot de passe local | Oui (hachage, reset, fuite) | Non | Oui | Facile |
+| B. OAuth Facebook | Non | Fort | Souvent déjà là | Moyen |
+| C. OAuth Google | Non | Faible (profil seulement) | Souvent déjà là | Moyen |
+| D. Aucun compte | — | — | Non | Impossible à attribuer |
 
-## Pourquoi pas les autres
+D est éliminé : le jeton exige deux identifiants distincts.  
+A déplace le risque vers l’hébergeur (Pi, disque, sauvegardes) sans gain métier.  
+B contredit le cadrage : on retire l’entraide des groupes Facebook précisément pour éviter le fil public.
 
-- Mot de passe maison : à stocker, à réinitialiser, à défendre. Charge hors v1.
-- Facebook : c’est exactement le chaos qu’on sort du produit (likes, commentaires, fil). L’app n’est pas un réseau social.
-- Sans compte : impossible d’attribuer une annonce, un jeton, ou une suppression admin.
+## 4. Décision
 
-## Conséquences
+**C.** Auth.js, fournisseur Google, session côté application.  
+L’identifiant retenu est celui que Google expose (sous-jacent : `sub` + courriel). Aucun mot de passe n’est stocké dans PostgreSQL.
 
-- Il faut un écran Google Cloud (origines + redirect) pour localhost et pour entraideboisbriand.com.
-- Les gens sans Gmail sont exclus en v1. Accepté. Un second fournisseur (Apple, courriel) peut s’ajouter plus tard sans changer le métier.
-- La session vit dans l’app, pas dans un fil public.
+Le domaine `entraideboisbriand.com` et `localhost:3000` sont les deux origines autorisées du client OAuth. Le périmètre demandé se limite à `openid email profile`.
 
-## Ce que ça ne change pas
+## 5. Conséquences
 
-Un item, un échange, un jeton. Pas de carnet de personnes. Pas de salon général.
+Favorables : pas de table de mots de passe ; un clic pour une personne qui a déjà Gmail ; le schéma métier (`User`, `Annonce`, `Echange`) reste indépendant du fournisseur.
+
+Défavorables : exclusion, en v1, de quiconque refuse Google. Dette assumée. Un second fournisseur (Apple, ou courriel magique) s’ajoute par configuration Auth.js, sans modifier le cycle item → acceptation → jeton → clôture.
+
+Hors décision : le carnet de personnes, le fil public, les canaux B et C.
+
+## 6. Révision
+
+Revoir cet ADR si un second fournisseur devient un besoin mesurable (plaintes répétées, public aîné sans Gmail) ou si Google restreint le client OAuth.
