@@ -4,6 +4,7 @@ import {
   cloturer,
   creerEchange,
   nombreFamillesAidees,
+  nombrePaniersNoel,
 } from "../src/domain/echange";
 
 describe("échange",
@@ -59,3 +60,15 @@ describe("échange",
         expect(nombreFamillesAidees(["remis", "ouvert", "remis", "annule"])).toBe(2);
       });
   });
+
+describe("paniers de Noël", () => {
+  it("compte seulement les remis de catégorie panier", () => {
+    expect(
+      nombrePaniersNoel([
+        { statut: "remis", categorie: "panier" },
+        { statut: "remis", categorie: "vetement" },
+        { statut: "ouvert", categorie: "panier" },
+      ]),
+    ).toBe(1);
+  });
+});
