@@ -423,3 +423,6 @@ textarea { min-height: 7.5rem; resize: vertical; }
 }
 .objectif-score { margin: 0; font-size: 0.98rem; }
 .objectif-note { margin: 0.35rem 0 0; font-size: 0.82rem; color: var(--muet); }
+
+.objectif-goals { margin-top: 1.15rem; display: grid; gap: 0.95rem; }
+.objectif-titre { margin: 0 0 0.35rem; font-size: 1rem; font-weight: 700; }
