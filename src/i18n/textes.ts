@@ -64,7 +64,7 @@ export const textes = {
     taAnnonce: "C’est ton annonce. Les réponses arriveront ici plus tard.",
     dejaRepondu: "Tu as déjà répondu. Pas de chat tant que ce n’est pas accepté.",
     piedLigne:
-      "Outil d’échange local. Projet indépendant, open source. Pas un service municipal.",
+      "Outil d’échange local. Projet indépendant, open source. Sans liens avec la municipalité.",
     lienMarche: "Comment ça marche",
     lienConfidentialite: "Confidentialité",
     lienApropos: "À propos",
@@ -159,7 +159,7 @@ export const textes = {
     taAnnonce: "This is your listing. Replies will show here later.",
     dejaRepondu: "You already replied. No chat until it is accepted.",
     piedLigne:
-      "Local exchange tool. Independent, open source. Not a municipal service.",
+      "Local exchange tool. Independent, open source. No ties with the municipality.",
     lienMarche: "How it works",
     lienConfidentialite: "Privacy",
     lienApropos: "About",
