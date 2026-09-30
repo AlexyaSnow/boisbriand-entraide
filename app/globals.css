@@ -194,6 +194,36 @@ h2 {
 }
 .annonce:hover { background: #fbf6ee; }
 
+.grille {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: 1rem;
+}
+
+.tuile {
+  display: flex;
+  flex-direction: column;
+  background: var(--blanc);
+  border: 1px solid var(--ligne);
+  border-radius: 1rem;
+  overflow: hidden;
+  text-decoration: none;
+  box-shadow: var(--ombre);
+  min-height: 100%;
+}
+.tuile:hover { background: #fbf6ee; }
+
+.tuile .vignette {
+  width: 100%;
+  height: 12rem;
+  border-radius: 0;
+}
+
+.tuile-texte { padding: 0.9rem 1rem 1.1rem; }
+
 .point { padding: 1.15rem 1.2rem; }
 
 .vignette {

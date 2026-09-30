@@ -117,12 +117,12 @@ export default async function Accueil() {
       {annonces.length === 0 ? (
         <p className="hint">{i.aucune}</p>
       ) : (
-        <ul className="liste">
+        <ul className="grille">
           {annonces.map((a) => (
             <li key={a.id}>
-              <Link className="annonce" href={`/annonce/${a.id}`}>
+              <Link className="tuile" href={`/annonce/${a.id}`}>
                 <Vignette src={a.photoUrl} />
-                <div>
+                <div className="tuile-texte">
                   <span className="nom">{a.titre}</span>
                   <span className="meta">
                     {a.type === "offre" ? i.offre : i.besoinLabel} ·{" "}
