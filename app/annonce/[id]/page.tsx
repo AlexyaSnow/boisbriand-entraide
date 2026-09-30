@@ -8,7 +8,7 @@ import { prisma } from "@/src/lib/prisma";
 import { BoutonRepondre } from "@/src/ui/BoutonRepondre";
 import { BoutonAccepter } from "@/src/ui/BoutonAccepter";
 import { BoutonSupprimer } from "@/src/ui/BoutonSupprimer";
-import { Vignette } from "@/src/ui/Vignette";
+import { Galerie } from "@/src/ui/Galerie";
 
 export default async function PageAnnonce({
   params,
@@ -35,6 +35,12 @@ export default async function PageAnnonce({
   const deja = moi
     ? annonce.reponses.find((r) => r.auteurId === moi)
     : null;
+  const urls =
+    annonce.photos && annonce.photos.length > 0
+      ? annonce.photos
+      : annonce.photoUrl
+        ? [annonce.photoUrl]
+        : [];
 
   return (
     <main>
@@ -46,7 +52,7 @@ export default async function PageAnnonce({
         {annonce.type === "offre" ? i.offre : i.besoinLabel}
         {annonce.statut === "reservee" ? " · réservée" : ""}
       </p>
-      <Vignette src={annonce.photoUrl} grande />
+      <Galerie urls={urls} />
       {annonce.detail ? <p>{annonce.detail}</p> : null}
       <p className="hint">{i.hintLieu}</p>
 
