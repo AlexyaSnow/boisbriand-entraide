@@ -20,7 +20,7 @@ export const textes = {
     lieuxConnexion: "Connecte-toi pour épingler 2 ou 3 lieux accessibles à pied.",
     titre: "Un don ou un besoin.\nUn lieu public.\nUn échange.",
     lede: "Un item à la fois. Rencontre seulement dans un lieu de la liste.",
-    compteurZero: "Aucune famille aidée pour l’instant. Le chiffre monte quand un jeton est marqué remis.",
+    compteurZero: "Aucune famille aidée pour l’instant.",
     compteurUn: "1 famille aidée",
     compteurN: "familles aidées",
     btnOffre: "Publier une offre",
@@ -63,6 +63,38 @@ export const textes = {
     jeDonne: "Je peux le donner",
     taAnnonce: "C’est ton annonce. Les réponses arriveront ici plus tard.",
     dejaRepondu: "Tu as déjà répondu. Pas de chat tant que ce n’est pas accepté.",
+    piedLigne:
+      "Outil d’échange local. Projet indépendant, open source. Pas un service municipal.",
+    lienMarche: "Comment ça marche",
+    lienConfidentialite: "Confidentialité",
+    lienApropos: "À propos",
+    lienGithub: "GitHub",
+    courrielOrga: "bonjour@entraideboisbriand.com",
+    lieuxNote: "Rencontres seulement dans un lieu de la liste. Jamais à domicile.",
+    marcheTitre: "Comment ça marche",
+    marche1: "Un don ou un besoin : un item à la fois.",
+    marche2:
+      "On se rejoint seulement à un lieu public de la liste (caméras, heures d’ouverture). Jamais à domicile.",
+    marche3: "Quand deux personnes s’entendent, un jeton s’ouvre. On écrit seulement dans ce jeton.",
+    marche4:
+      "Item remis : les deux le confirment, un admin valide. Le compteur « familles aidées » augmente de 1. Annuler : le compteur ne bouge pas.",
+    confTitre: "Confidentialité",
+    conf1:
+      "On demande un compte Google pour publier ou répondre. Nom, courriel et photo Google servent à savoir qui parle dans un jeton.",
+    conf2: "Les photos concernent l’item, pas les visages. Maximum 4 par annonce.",
+    conf3:
+      "Le chat n’existe que dans un jeton, entre les deux personnes de l’échange, tant qu’il n’est pas clos.",
+    conf4: "On ne vend pas les données. Pas de fil public, de likes, ni de carnet de contacts.",
+    conf5: "Les avis portent sur l’organisation (fiche Google), pas sur une personne.",
+    conf6: "Correction ou suppression de compte : bonjour@entraideboisbriand.com",
+    conf7: "Hébergement : serveur local et Cloudflare. Photos : stockage prévu à cet effet.",
+    aproposTitre: "À propos",
+    apropos1:
+      "Entraide Boisbriand est un outil pour donner ou chercher un item à Boisbriand et dans la MRC Thérèse-De Blainville, sans passer par les groupes Facebook.",
+    apropos2: "Ce n’est pas un service de la Ville. C’est un projet indépendant, open source.",
+    apropos3:
+      "Il est porté par Alexya Pelchat-Loubier, dans le cadre du cours INF1410 (TÉLUQ) et destiné à rester utile après la session.",
+    apropos4: "Code source public sur GitHub.",
   },
   en: {
     marque: "Boisbriand Mutual Aid",
@@ -83,7 +115,7 @@ export const textes = {
     lieuxConnexion: "Sign in to pin 2 or 3 places you can reach on foot.",
     titre: "A gift or a need.\nA public place.\nOne exchange.",
     lede: "One item at a time. Meet only at a listed place.",
-    compteurZero: "No family helped yet. The number goes up when a token is marked handed over.",
+    compteurZero: "No family helped yet.",
     compteurUn: "1 family helped",
     compteurN: "families helped",
     btnOffre: "Post an offer",
@@ -126,6 +158,37 @@ export const textes = {
     jeDonne: "I can give it",
     taAnnonce: "This is your listing. Replies will show here later.",
     dejaRepondu: "You already replied. No chat until it is accepted.",
+    piedLigne:
+      "Local exchange tool. Independent, open source. Not a municipal service.",
+    lienMarche: "How it works",
+    lienConfidentialite: "Privacy",
+    lienApropos: "About",
+    lienGithub: "GitHub",
+    courrielOrga: "bonjour@entraideboisbriand.com",
+    lieuxNote: "Meet only at a listed place. Never at home.",
+    marcheTitre: "How it works",
+    marche1: "A gift or a need: one item at a time.",
+    marche2:
+      "Meet only at a listed public place (cameras, opening hours). Never at home.",
+    marche3: "When two people agree, a token opens. Write only inside that token.",
+    marche4:
+      "Handed over: both confirm, an admin validates. The \u201cfamilies helped\u201d count goes up by 1. Cancel: the count stays the same.",
+    confTitre: "Privacy",
+    conf1:
+      "A Google account is required to post or reply. Name, email and Google photo tell us who is in a token.",
+    conf2: "Photos are of the item, not faces. Maximum 4 per listing.",
+    conf3: "Chat exists only inside a token, between the two people, until it closes.",
+    conf4: "We do not sell data. No public feed, likes, or contact book.",
+    conf5: "Reviews are about the organization (Google Business), not a person.",
+    conf6: "Correction or account deletion: bonjour@entraideboisbriand.com",
+    conf7: "Hosting: local server and Cloudflare. Photos: dedicated storage.",
+    aproposTitre: "About",
+    apropos1:
+      "Boisbriand Mutual Aid is a tool to give or find an item in Boisbriand and MRC Thérèse-De Blainville, without Facebook groups.",
+    apropos2: "It is not a City service. It is an independent, open-source project.",
+    apropos3:
+      "It is run by Alexya Pelchat-Loubier, as part of INF1410 (TÉLUQ), and is meant to stay useful after the course.",
+    apropos4: "Source code is public on GitHub.",
   },
 } as const;
 
