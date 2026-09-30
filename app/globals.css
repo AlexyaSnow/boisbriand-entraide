@@ -100,8 +100,16 @@ h1 {
   color: var(--muet);
   font-size: 1.15rem;
   line-height: 1.55;
+  margin: 0 0 0.85rem;
+  max-width: 36rem;
+}
+
+.compteur {
   margin: 0 0 1.6rem;
   max-width: 36rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--vert);
 }
 
 .actions {

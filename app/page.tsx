@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { auth } from "@/auth";
 import { POINTS_AUTORISES } from "@/src/domain/points";
+import { nombreFamillesAidees } from "@/src/domain/echange";
 import { ListePoints } from "@/src/ui/ListePoints";
 import { Vignette } from "@/src/ui/Vignette";
 import { prisma } from "@/src/lib/prisma";
@@ -19,10 +20,27 @@ function libelleCategorie(
   return i.autre;
 }
 
+function libelleCompteur(n: number, i: ReturnType<typeof t>): string {
+  if (n === 0) return i.compteurZero;
+  if (n === 1) return i.compteurUn;
+  return `${n} ${i.compteurN}`;
+}
+
 export default async function Accueil() {
   const langue = await langueActuelle();
   const i = t(langue);
   const session = await auth();
+
+  let famillesAidees = 0;
+  try {
+    const remis = await prisma.echange.findMany({
+      where: { statut: "remis" },
+      select: { statut: true },
+    });
+    famillesAidees = nombreFamillesAidees(remis.map((e) => e.statut));
+  } catch {
+    famillesAidees = 0;
+  }
 
   let annonces: {
     id: string;
@@ -78,6 +96,9 @@ export default async function Accueil() {
     <main>
       <h1>{i.titre}</h1>
       <p className="lede">{i.lede}</p>
+      <p className="compteur" aria-live="polite">
+        {libelleCompteur(famillesAidees, i)}
+      </p>
       <div className="actions">
         <Link className="btn btn-primary" href="/offre">
           {i.btnOffre}
