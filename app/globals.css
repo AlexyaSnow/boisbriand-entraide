@@ -199,8 +199,9 @@ h2 {
   padding: 0;
   margin: 0 0 2.5rem;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 22rem));
   gap: 1rem;
+  justify-content: start;
 }
 
 .tuile {
@@ -218,8 +219,10 @@ h2 {
 
 .tuile .vignette {
   width: 100%;
-  height: 12rem;
+  height: 16rem;
   border-radius: 0;
+  object-fit: contain;
+  background: var(--blanc);
 }
 
 .tuile-texte { padding: 0.9rem 1rem 1.1rem; }
