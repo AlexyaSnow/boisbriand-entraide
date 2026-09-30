@@ -43,6 +43,7 @@ export function FormulaireAnnonce({ type, langue }: Props) {
           <option value="vetement">{i.vetement}</option>
           <option value="denree">{i.denree}</option>
           <option value="enfant">{i.enfant}</option>
+          <option value="panier">{i.panier}</option>
           <option value="autre">{i.autre}</option>
         </select>
       </label>
