@@ -49,7 +49,12 @@ export function FormulaireAnnonce({ type, langue }: Props) {
       <label>
         {i.photo}
         <span className="hint">{i.hintPhoto}</span>
-        <input name="photo" type="file" accept="image/jpeg,image/png,image/webp" />
+        <input
+          name="photos"
+          type="file"
+          accept="image/jpeg,image/png,image/webp,image/heic,image/heif"
+          multiple
+        />
       </label>
       <label>
         {i.detail}

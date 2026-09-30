@@ -92,6 +92,7 @@ model Annonce {
   categorie Categorie
   detail    String        @default("")
   photoUrl  String?
+  photos    String[]      @default([])
   statut    StatutAnnonce @default(ouverte)
   auteurId  String?
   auteur    User?         @relation(fields: [auteurId], references: [id])
