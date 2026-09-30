@@ -1,4 +1,4 @@
-export const CATEGORIES = ["vetement", "denree", "enfant", "autre"] as const;
+export const CATEGORIES = ["vetement", "denree", "enfant", "panier", "autre"] as const;
 export type CategorieAnnonce = (typeof CATEGORIES)[number];
 
 export function validerAnnonce(input: {
