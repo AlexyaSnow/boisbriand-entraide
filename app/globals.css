@@ -365,3 +365,61 @@ textarea { min-height: 7.5rem; resize: vertical; }
   color: var(--muet);
 }
 .etapes li { margin: 0 0 0.9rem; }
+
+.objectif-noel {
+  margin: 1.1rem 0 1.35rem;
+  padding: 1.15rem 1.2rem 1rem;
+  background: var(--blanc);
+  border: 1px solid var(--ligne);
+  border-radius: 0.35rem;
+  max-width: 36rem;
+}
+.objectif-kicker {
+  margin: 0 0 0.85rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--vert);
+}
+.objectif-row {
+  display: flex;
+  align-items: flex-end;
+}
+.objectif-cell {
+  flex: 1;
+  padding-right: 0.8rem;
+}
+.objectif-cell + .objectif-cell {
+  border-left: 1px solid var(--ligne);
+  padding-left: 0.8rem;
+}
+.objectif-num {
+  display: block;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.objectif-lab {
+  display: block;
+  margin-top: 0.45rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muet);
+}
+.objectif-barre {
+  margin: 1.05rem 0 0.55rem;
+  height: 3px;
+  background: var(--ligne);
+}
+.objectif-barre span {
+  display: block;
+  height: 100%;
+  background: var(--vert);
+}
+.objectif-score { margin: 0; font-size: 0.98rem; }
+.objectif-note { margin: 0.35rem 0 0; font-size: 0.82rem; color: var(--muet); }
