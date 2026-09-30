@@ -20,6 +20,13 @@ const tim6eDim = [{ debutMin: hm(7), finMin: hm(18) }];
 const timSancheSemaine = [{ debutMin: hm(5, 30), finMin: hm(20) }];
 const timSancheDim = [{ debutMin: hm(7), finMin: hm(20) }];
 
+const hotelStSemaine = [
+  { debutMin: hm(8), finMin: hm(12) },
+  { debutMin: hm(13), finMin: hm(16, 30) },
+];
+const hotelStVendredi = [{ debutMin: hm(8), finMin: hm(12) }];
+
+
 export const POINTS_AUTORISES: PointAutorise[] = [
   {
     id: "biblio-grande-allee",
@@ -92,6 +99,27 @@ export const POINTS_AUTORISES: PointAutorise[] = [
     adresseAffichee: "Chemin de la Côte-Nord",
     horaireConfirme: false,
     horaires: [touteLaJournee, touteLaJournee, touteLaJournee, touteLaJournee, touteLaJournee, touteLaJournee, touteLaJournee],
+  },
+  {
+    id: "biblio-ste-therese",
+    nom: "Bibliothèque Sainte-Thérèse",
+    adresseAffichee: "150, boul. du Séminaire, Sainte-Thérèse",
+    horaireConfirme: true,
+    horaires: [weekEndBiblio, semaineBiblio, semaineBiblio, semaineBiblio, semaineBiblio, semaineBiblio, weekEndBiblio],
+  },
+  {
+    id: "hotel-ville-ste-therese",
+    nom: "Hôtel de ville Sainte-Thérèse",
+    adresseAffichee: "6, rue de l’Église, Sainte-Thérèse",
+    horaireConfirme: true,
+    horaires: [ferme, hotelStSemaine, hotelStSemaine, hotelStSemaine, hotelStSemaine, hotelStVendredi, ferme],
+  },
+  {
+    id: "iga-blainville-est",
+    nom: "IGA Sainte-Thérèse",
+    adresseAffichee: "450, rue Blainville Est, Sainte-Thérèse",
+    horaireConfirme: true,
+    horaires: [weekEndIga, semaineIga, semaineIga, semaineIga, semaineIga, semaineIga, weekEndIga],
   },
 ];
 
