@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { auth } from "@/auth";
 import { POINTS_AUTORISES } from "@/src/domain/points";
-import { nombreFamillesAidees } from "@/src/domain/echange";
+import { nombreFamillesAidees, nombrePaniersNoel } from "@/src/domain/echange";
 import { ListePoints } from "@/src/ui/ListePoints";
 import { Vignette } from "@/src/ui/Vignette";
 import { prisma } from "@/src/lib/prisma";
@@ -18,6 +18,7 @@ function libelleCategorie(
   if (categorie === "vetement") return i.vetement;
   if (categorie === "denree") return i.denree;
   if (categorie === "enfant") return i.enfant;
+  if (categorie === "panier") return i.panier;
   return i.autre;
 }
 
@@ -33,14 +34,19 @@ export default async function Accueil() {
   const session = await auth();
 
   let famillesAidees = 0;
+  let paniersNoel = 0;
   try {
     const remis = await prisma.echange.findMany({
       where: { statut: "remis" },
-      select: { statut: true },
+      select: { statut: true, annonce: { select: { categorie: true } } },
     });
     famillesAidees = nombreFamillesAidees(remis.map((e) => e.statut));
+    paniersNoel = nombrePaniersNoel(
+      remis.map((e) => ({ statut: e.statut, categorie: e.annonce.categorie })),
+    );
   } catch {
     famillesAidees = 0;
+    paniersNoel = 0;
   }
 
   let annonces: {
@@ -99,7 +105,7 @@ export default async function Accueil() {
         <div>
           <h1>{i.titre}</h1>
           <p className="lede">{i.lede}</p>
-          <ObjectifNoel aidees={famillesAidees} langue={langue} />
+          <ObjectifNoel aidees={famillesAidees} paniers={paniersNoel} langue={langue} />
           <div className="actions">
             <Link className="btn btn-primary" href="/offre">
               {i.btnOffre}
