@@ -7,6 +7,7 @@ import { Vignette } from "@/src/ui/Vignette";
 import { prisma } from "@/src/lib/prisma";
 import { langueActuelle } from "@/src/i18n/langue";
 import { t } from "@/src/i18n/textes";
+import { ObjectifNoel } from "@/src/ui/ObjectifNoel";
 
 export const dynamic = "force-dynamic";
 
@@ -98,9 +99,7 @@ export default async function Accueil() {
         <div>
           <h1>{i.titre}</h1>
           <p className="lede">{i.lede}</p>
-          <p className="compteur" aria-live="polite">
-            {libelleCompteur(famillesAidees, i)}
-          </p>
+          <ObjectifNoel aidees={famillesAidees} langue={langue} />
           <div className="actions">
             <Link className="btn btn-primary" href="/offre">
               {i.btnOffre}
