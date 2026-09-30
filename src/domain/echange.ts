@@ -37,3 +37,9 @@ export function cloturer(echange: Echange, fin: "remis" | "annule"): Echange {
 export function nombreFamillesAidees(statuts: StatutEchange[]): number {
   return statuts.filter((s) => s === "remis").length;
 }
+
+export function nombrePaniersNoel(
+  remis: { statut: StatutEchange; categorie: string }[],
+): number {
+  return remis.filter((r) => r.statut === "remis" && r.categorie === "panier").length;
+}
