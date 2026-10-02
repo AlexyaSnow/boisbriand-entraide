@@ -1,7 +1,10 @@
+import path from "path";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  distDir: process.env.NEXT_DIST_DIR || ".next",
+  outputFileTracingRoot: path.join(__dirname),
   async headers() {
     return [
       {
