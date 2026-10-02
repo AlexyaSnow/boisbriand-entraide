@@ -22,12 +22,6 @@ function libelleCategorie(
   return i.autre;
 }
 
-function libelleCompteur(n: number, i: ReturnType<typeof t>): string {
-  if (n === 0) return i.compteurZero;
-  if (n === 1) return i.compteurUn;
-  return `${n} ${i.compteurN}`;
-}
-
 export default async function Accueil() {
   const langue = await langueActuelle();
   const i = t(langue);
@@ -105,7 +99,8 @@ export default async function Accueil() {
         <div>
           <h1>{i.titre}</h1>
           <p className="lede">{i.lede}</p>
-          <ObjectifNoel aidees={famillesAidees} paniers={paniersNoel} langue={langue} />
+          <p className="lede">{i.lede2}</p>
+          <p className="phrase">{i.phrase}</p>
           <div className="actions">
             <Link className="btn btn-primary" href="/offre">
               {i.btnOffre}
@@ -115,14 +110,12 @@ export default async function Accueil() {
             </Link>
           </div>
         </div>
-        <svg className="branche" viewBox="0 0 200 260" fill="none" aria-hidden="true">
-          <path d="M100 250 C90 180 40 140 70 40" stroke="#2d5a40" strokeWidth="1.4" />
-          <path d="M96 160 C130 140 160 90 150 30" stroke="#2d5a40" strokeWidth="1.2" />
-          <ellipse cx="68" cy="48" rx="16" ry="8" stroke="#2d5a40" />
-          <ellipse cx="88" cy="70" rx="14" ry="7" stroke="#2d5a40" />
-          <ellipse cx="148" cy="36" rx="16" ry="8" stroke="#2d5a40" />
-          <ellipse cx="132" cy="64" rx="13" ry="7" stroke="#2d5a40" />
-        </svg>
+        <div className="hero-cote">
+          <ObjectifNoel aidees={famillesAidees} paniers={paniersNoel} langue={langue} />
+          <h2>{i.points}</h2>
+          <p className="hint">{i.lieuxNote}</p>
+          <ListePoints points={POINTS_AUTORISES} langue={langue} />
+        </div>
       </section>
 
       {session?.user ? (
@@ -172,9 +165,6 @@ export default async function Accueil() {
           ))}
         </ul>
       )}
-      <h2>{i.points}</h2>
-      <p className="hint">{i.lieuxNote}</p>
-      <ListePoints points={POINTS_AUTORISES} langue={langue} />
     </main>
   );
 }
