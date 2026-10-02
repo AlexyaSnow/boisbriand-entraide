@@ -54,9 +54,10 @@ a { color: inherit; }
   .hero { grid-template-columns: 1fr; }
 }
 .hero-cote { display: grid; align-content: start; gap: 0.35rem; }
-.hero-cote .objectif-noel,
 .hero-cote .liste { max-width: none; margin-bottom: 0.4rem; }
-.hero-cote h2 { margin-top: 0.8rem; }
+.hero-cote h2 { margin-top: 0; }
+.hero .actions { margin-bottom: 1.1rem; }
+.hero .objectif-noel { max-width: none; margin-top: 0; }
 
 .marque {
   font-family: var(--font-serif), Georgia, serif;
