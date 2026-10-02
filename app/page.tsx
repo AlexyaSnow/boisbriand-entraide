@@ -109,9 +109,9 @@ export default async function Accueil() {
               {i.btnBesoin}
             </Link>
           </div>
+          <ObjectifNoel aidees={famillesAidees} paniers={paniersNoel} langue={langue} />
         </div>
         <div className="hero-cote">
-          <ObjectifNoel aidees={famillesAidees} paniers={paniersNoel} langue={langue} />
           <h2>{i.points}</h2>
           <p className="hint">{i.lieuxNote}</p>
           <ListePoints points={POINTS_AUTORISES} langue={langue} />
