@@ -6,7 +6,7 @@ import { validerPhoto } from "@/src/domain/photo";
 import { prisma } from "@/src/lib/prisma";
 import { enregistrerPhoto } from "@/src/lib/stockage-photo";
 
-const MAX_PHOTOS = 4;
+const MAX_PHOTOS = 5;
 
 export async function publierAnnonce(
   type: "offre" | "besoin",
@@ -28,18 +28,17 @@ export async function publierAnnonce(
     ...formData.getAll("photos"),
   ].filter((x): x is File => x instanceof File && x.size > 0);
 
-  const uniques = bruts.slice(0, MAX_PHOTOS);
   if (bruts.length > MAX_PHOTOS) {
-    return { ok: false, message: "Maximum 4 photos par item." };
+    return { ok: false, message: "Maximum 5 photos par item." };
   }
 
-  for (const fichier of uniques) {
+  for (const fichier of bruts) {
     const photoOk = validerPhoto(fichier);
     if (!photoOk.ok) return photoOk;
   }
 
   const photos: string[] = [];
-  for (const fichier of uniques) {
+  for (const fichier of bruts) {
     try {
       photos.push(await enregistrerPhoto(fichier));
     } catch {
