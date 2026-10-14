@@ -23,7 +23,7 @@ Aucun mot de passe local. Pas de graphe d’amis.
 
 | Table | Rôle | Champs utiles | Interdit |
 | --- | --- | --- | --- |
-| `Annonce` | L’item publié | `type` offre/besoin, `categorie`, `titre`, `detail`, `photos[]` (max 4 côté app), `photoUrl` vignette, `statut` ouverte/reservee/fermee | adresse libre, fil public |
+| `Annonce` | L’item publié | `type` offre/besoin, `categorie`, `titre`, `detail`, `photos[]` (max 5 côté app), `photoUrl` vignette, `statut` ouverte/reservee/fermee | adresse libre, fil public |
 | `Reponse` | « Je veux cet item » avant le jeton | `annonceId` + `auteurId` uniques ensemble | texte de chat |
 | `Echange` | Le contrat | `jeton` unique, `annonceId` unique, `offrantId`, `demandeurId`, `pointId` (liste fermée), `creneauDebut`, `statut` | 2e item, 2e jeton parallèle |
 | `Message` | Chat **dans** le jeton | `texte`, auteur, date | salon sur l’annonce |
