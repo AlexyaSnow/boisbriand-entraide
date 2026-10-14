@@ -5,7 +5,7 @@ date: 2026-10-13
 
 **Décision architecturale**
 
-J’ai choisi Next.js avec TypeScript, PostgreSQL et une authentification Google. Le contexte : une application transactionnelle qui doit survivre au cours, avec des utilisateurs réels et des données personnelles. J’ai écarté un backend séparé (plus de pièces à maintenir pour une personne seule) et une base document (les relations item–échange–jeton sont strictes). La liste fermée de lieux est une règle métier, pas une préférence d’interface : elle est dans le schéma et dans les validations.
+J’ai choisi Next.js avec TypeScript, PostgreSQL et une authentification Google. Le contexte : une application transactionnelle qui doit survivre au cours, avec des utilisateurs réels et des données personnelles. J’ai écarté un backend séparé (plus de pièces à maintenir pour une personne seule) et une base document (les relations item–échange–jeton sont strictes). Une auth locale avec mot de passe aurait ajouté de la gestion de comptes sans gain pour ce cas. La liste fermée de lieux est une règle métier, pas une préférence d’interface : elle est dans le schéma et dans les validations.
 
 **Obstacle**
 
