@@ -13,4 +13,4 @@ Le premier déploiement payant (Fly) dépassait ce que je voulais dépenser pour
 
 **Schéma**
 
-Le schéma montre qu’un item n’a qu’un échange, et qu’un échange n’a qu’un jeton. Pas de fil public, pas de relation « ami ». Les lieux sont une table de référence, pas un champ libre. Ça force la règle de sécurité dès la base : on ne peut pas stocker une adresse personnelle.
+Le schéma montre qu’un item n’a qu’un échange, et qu’un échange n’a qu’un jeton. Pas de fil public, pas de relation « ami ». Les lieux ne sont pas une table SQL : ils sont une liste fermée dans le code (`POINTS_AUTORISES`). Le jeton ne stocke que l’identifiant du point, jamais une adresse saisie. Ça force la règle de sécurité dès la base : on ne peut pas stocker une adresse personnelle.
