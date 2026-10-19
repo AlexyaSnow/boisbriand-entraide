@@ -5,7 +5,7 @@ date: 2026-10-13
 
 **Décision architecturale**
 
-J’ai choisi Next.js avec TypeScript, PostgreSQL et une authentification Google. Le contexte : une application transactionnelle qui doit survivre au cours, avec des utilisateurs réels et des données personnelles. J’ai écarté un backend séparé (plus de pièces à maintenir pour une personne seule) et une base document (les relations item–échange–jeton sont strictes). Une auth locale avec mot de passe aurait ajouté de la gestion de comptes sans gain pour ce cas. La liste fermée de lieux est une règle métier, pas une préférence d’interface : elle est dans le schéma et dans les validations.
+J’ai choisi Next.js avec TypeScript, PostgreSQL et une authentification Google. Le contexte : une application transactionnelle qui doit survivre au cours, avec des utilisateurs réels et des données personnelles. J’ai écarté un backend séparé (plus de pièces à maintenir pour une personne seule) et une base document (les relations item–échange–jeton sont strictes). Une auth locale avec mot de passe aurait ajouté de la gestion de comptes sans gain pour ce cas. La liste fermée de lieux est une règle métier appliquée dans le code : le jeton stocke seulement un identifiant, et le code refuse tout ce qui n’est pas dans `POINTS_AUTORISES`.
 
 **Obstacle**
 
@@ -13,4 +13,4 @@ Le premier déploiement payant (Fly) dépassait ce que je voulais dépenser pour
 
 **Schéma**
 
-Le schéma montre qu’un item n’a qu’un échange, et qu’un échange n’a qu’un jeton. Pas de fil public, pas de relation « ami ». Les lieux ne sont pas une table SQL : ils sont une liste fermée dans le code (`POINTS_AUTORISES`). Le jeton ne stocke que l’identifiant du point, jamais une adresse saisie. Ça force la règle de sécurité dès la base : on ne peut pas stocker une adresse personnelle.
+Le schéma impose qu’une annonce a un auteur (auteurId obligatoire), qu’un item n’a qu’un échange, et qu’un échange n’a qu’un jeton. Pas de fil public, pas de relation « ami ». Les lieux ne sont pas une table SQL : ils sont une liste fermée dans le code. La base stocke l’identifiant choisi (`pointId`), mais c’est le code qui vérifie qu’il appartient à la liste. Ça évite de stocker une adresse libre, sans faire croire que le moteur de base de données l’interdit à lui seul.
