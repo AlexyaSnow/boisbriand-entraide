@@ -95,8 +95,8 @@ model Annonce {
   photoUrl  String?
   photos    String[]      @default([])
   statut    StatutAnnonce @default(ouverte)
-  auteurId  String?
-  auteur    User?         @relation(fields: [auteurId], references: [id])
+  auteurId  String
+  auteur    User          @relation(fields: [auteurId], references: [id])
   reponses  Reponse[]
   echange   Echange?
   createdAt DateTime      @default(now())
